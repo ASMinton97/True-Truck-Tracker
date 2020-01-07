@@ -25,6 +25,12 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android":{
+      "package": "com.aminton.TrueTruckTracker",
+      "config":{
+          "googleMaps": {"apiKey": "AIzaSyBiBHHoqdnd4k6tX4W_qmGl9n1_6N8Z4Os"}
+      }
     }
   }
 }
