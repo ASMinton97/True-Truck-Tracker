@@ -110,47 +110,6 @@ export default class App extends React.Component {
             longitudeDelta: 0.0521
         }}
       />
-
-      // <View>
-      // <Text>{this.state.positionLatitude} + {this.state.positionLongitude}</Text>
-      // <Button
-      //   title="Refresh Location"
-      //   onPress={() => this.fetchData()}
-      // />
-      // </View>
-
-
-      // <View>
-      //   <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-      //     <FlatList
-      //       data={this.state.data}
-      //       keyExtractor={item => item.id}
-      //       ListHeaderComponent={this.renderHeader}
-      //       ListFooterComponent={this.renderFooter}
-      //       renderItem={({ item }) => {
-      //         const rating = item.rating ? item.rating : 'N/A';
-
-      //         return (
-      //           <View>
-      //             <ListItem
-      //               roundAvatar
-      //               title={`${item.name}` + " (" + `${rating}` + ")"}
-      //               subtitle={`${item.vicinity}`}
-      //               avatar={{ uri: item.icon }}
-      //               containerStyle={{ borderBottomWidth: 0 }}
-      //             />
-      //             <View style={{ height: 1, width: "86%", backgroundColor: "CED0CE", marginLeft: "14%" }}>
-      //             </View>
-      //           </View>
-      //         )
-      //       }}
-      //       onRefresh={this.handleRefresh}
-      //       refreshing={this.state.refreshing}
-      //       onEndReached={this.handleLoadMore}
-      //       onEndReachedThreshold={50}
-      //     />
-      //   </List>
-      // </View>
     );
   }
 }
