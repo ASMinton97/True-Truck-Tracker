@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, FlatList, Button } from "react-native";
 import { List, ListItem } from 'react-native-elements';
 import MapView from "react-native-maps";
 var _ = require('lodash');
@@ -8,6 +8,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      positionLatitude: null,
+      positionLongitude: null,
       loading: false,
       data: [],
       pageToken: '',
@@ -16,7 +18,7 @@ export default class App extends React.Component {
     }
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.fetchData();
   }
 
@@ -46,7 +48,9 @@ export default class App extends React.Component {
               data: pageToken === '' ? res.results : arrayData,
               loading: false,
               refreshing: false,
-              pageToken: res.next_page_token
+              pageToken: res.next_page_token,
+              positionLatitude: latitude,
+              positionLongitude: longitude
             });
 
           })
@@ -74,7 +78,7 @@ export default class App extends React.Component {
     if (this.state.pageToken === undefined) return null;
 
     return (
-      <View style={{ paddingVertical=20, borderTopWidth: '#CDE0CE' }}>
+      <View style={{ paddingVertical: 20, borderTopWidth: '#CDE0CE' }}>
         <ActivityIndicator animating size='large' />
       </View>
     )
@@ -96,18 +100,57 @@ export default class App extends React.Component {
   };
 
   render() {
+    console.log("Latitude: " + this.state.positionLatitude + " Longitude: " + this.state.positionLongitude)
     return (
-      <MapView
-        style={{
-          flex: 1
-        }}
+      <MapView style={{ flex: 1 }}
         initialRegion={{
-          latitude: this.location,
-          longitude: this.location,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+            latitude: this.state.positionLatitude,
+            longitude: this.state.positionLongitude,
+            latitudeDelta: 0.1022,
+            longitudeDelta: 0.0521
         }}
       />
+
+      // <View>
+      // <Text>{this.state.positionLatitude} + {this.state.positionLongitude}</Text>
+      // <Button
+      //   title="Refresh Location"
+      //   onPress={() => this.fetchData()}
+      // />
+      // </View>
+
+
+      // <View>
+      //   <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+      //     <FlatList
+      //       data={this.state.data}
+      //       keyExtractor={item => item.id}
+      //       ListHeaderComponent={this.renderHeader}
+      //       ListFooterComponent={this.renderFooter}
+      //       renderItem={({ item }) => {
+      //         const rating = item.rating ? item.rating : 'N/A';
+
+      //         return (
+      //           <View>
+      //             <ListItem
+      //               roundAvatar
+      //               title={`${item.name}` + " (" + `${rating}` + ")"}
+      //               subtitle={`${item.vicinity}`}
+      //               avatar={{ uri: item.icon }}
+      //               containerStyle={{ borderBottomWidth: 0 }}
+      //             />
+      //             <View style={{ height: 1, width: "86%", backgroundColor: "CED0CE", marginLeft: "14%" }}>
+      //             </View>
+      //           </View>
+      //         )
+      //       }}
+      //       onRefresh={this.handleRefresh}
+      //       refreshing={this.state.refreshing}
+      //       onEndReached={this.handleLoadMore}
+      //       onEndReachedThreshold={50}
+      //     />
+      //   </List>
+      // </View>
     );
   }
 }
