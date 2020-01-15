@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ActivityIndicator, FlatList, Button } from "react-native";
 import { List, ListItem } from 'react-native-elements';
 import MapView from "react-native-maps";
+import Places from './src/components/places';
 var _ = require('lodash');
 
 export default class App extends React.Component {
@@ -106,8 +107,8 @@ export default class App extends React.Component {
         initialRegion={{
             latitude: this.state.positionLatitude,
             longitude: this.state.positionLongitude,
-            latitudeDelta: 0.1022,
-            longitudeDelta: 0.0521
+            latitudeDelta: 0.1292,
+            longitudeDelta: 0.1292
         }}
       />
     );
