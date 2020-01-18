@@ -14,7 +14,7 @@ export default class places extends Component {
         this.findCoordinates();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getData();
     }
 
@@ -29,29 +29,29 @@ export default class places extends Component {
             });
     };
 
-    getData(){
-        let url = `https://api.yelp.com/v3/foodtrucks/search?latitude=${this.state.userLatitude}&longitude=${this.state.userLongitude}&radius_filter=500`;
+    getData() {
+        let url = `https://api.yelp.com/v3/businesses/search?term=foodtrucks&latitude=${this.state.userLatitude}&longitude=${this.state.userLongitude}&radius_filter=500`;
         fetch(url, {
             method: 'GET',
-            headers: { Authorization: 'Bearer ', apiKey: this.state.apiKey}
+            headers: { 'Authorization': `Bearer ${this.state.apiKey}` }
         })
             .then(response => response.json())
             .then(json => {
-                for(let i=0; i < json.body.businesses.length; i++){
+                console.log("This is my JSON: " + json.businesses[1].name);
+                for (let i = 0; i < json.businesses.length; i++) {
                     console.log(i);
                     this.state.markers.push({
-                        name: json.body.businesses[i].name,
-                        coordinates: json.body.businesses[i].coordinates,
-                        rating: json.body.businesses[i].rating,
-                        price: json.body.businesses[i].price,
-                        id: json.body.businesses[i].id,
-                        image_url: json.body.business[i].image_url,
-                        phone: json.body.businesses[i].phone
+                        name: json.businesses[i].name,
+                        coordinates: json.businesses[i].coordinates,
+                        rating: json.businesses[i].rating,
+                        price: json.businesses[i].price,
+                        id: json.businesses[i].id,
+                        image_url: json.business[i].image_url,
+                        phone: json.businesses[i].phone
                     })
+                    console.log("This is a food truck: " + markers[i]);
                 }
-                //this.setState({url: json.body.businesses})
-                console.log("IS THIS HAPPENING AT ALL?")
-                console.log(markers);
+                this.forceUpdate();
             }),
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -70,7 +70,7 @@ export default class places extends Component {
                 }}
             >
                 <Marker
-                    coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude}}
+                    coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
                     title='Here I am!'
                     description="Here is how description works"
                 />
