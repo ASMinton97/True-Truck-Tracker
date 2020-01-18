@@ -37,7 +37,7 @@ export default class places extends Component {
         })
             .then(response => response.json())
             .then(json => {
-                console.log("This is my JSON: " + json.businesses[1].name);
+                console.log("This is my JSON length: " + json.businesses.length);
                 for (let i = 0; i < json.businesses.length; i++) {
                     console.log(i);
                     this.state.markers.push({
@@ -48,7 +48,7 @@ export default class places extends Component {
                         id: json.businesses[i].id,
                         image_url: json.business[i].image_url,
                         phone: json.businesses[i].phone
-                    })
+                    });
                     console.log("This is a food truck: " + markers[i]);
                 }
                 this.forceUpdate();
