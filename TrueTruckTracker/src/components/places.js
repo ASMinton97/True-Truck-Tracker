@@ -9,14 +9,12 @@ export default class places extends Component {
             apiKey: '2zReQTlfVvoUM_NeXqba2jiYfbYN3e4LksUiFuivMlv_CsJc8hlMYvrVbZuM0ruv8sjpj-R6aljRzyyWBNVKvMyEEgPQI1oCadbsGV-kmpxACjunydwkOdVZmSwaXnYx',
             userLatitude: 1,
             userLongitude: 1,
-            markers: []
+            markers: [],
+            isLoading: true,
         }
     }
-    componentDidMount() {
-        this.getData();
-    }
 
-    componentWillMount(){
+    componentWillMount() {
         this.findCoordinates();
     }
 
@@ -26,7 +24,9 @@ export default class places extends Component {
                 const latitude = Number(position.coords.latitude.toFixed(6));
                 const longitude = Number(position.coords.longitude.toFixed(6));
                 this.setState({ userLatitude: latitude, userLongitude: longitude });
+                console.log('Latitude: ' + this.state.userLatitude + ' Longitude: ' + this.state.userLongitude);
                 this.forceUpdate();
+                this.getData();
             });
     };
 
@@ -39,24 +39,47 @@ export default class places extends Component {
             .then(response => response.json())
             .then(json => {
                 console.log("This is how many Foodtrucks are around: " + json.businesses.length);
-                console.log(json.body.businesses[0]);
+                let markersArray = [];
                 for (let i = 0; i < json.businesses.length; i++) {
-                    console.log(i);
-                    this.state.markers.push({
+                    console.log(json.businesses[i]);
+                    markersArray.push({
+                        test: i,
                         name: json.businesses[i].name,
-                        coordinates: json.businesses[i].coordinates,
+                        truckLatitude: json.businesses[i].coordinates.latitude,
+                        truckLongitude: json.businesses[i].coordinates.longitude,
                         rating: json.businesses[i].rating,
                         price: json.businesses[i].price,
-                        id: json.businesses[i].id,
-                        image_url: json.business[i].image_url,
-                        phone: json.businesses[i].phone
+                        // id: json.businesses[i].id,
+                        // image_url: json.business[i].image_url,
+                        // phone: json.businesses[i].phone
                     });
-                    this.setState({});
                     console.log("This is a food truck: " + i);
                 }
+                this.setState({ isLoading: false, markers: [...this.state.markers, markersArray] });
+                console.log(this.state.markers[0]);
             }),
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    }
+
+    renderTrucks() {
+        return this.state.isLoading ?
+            null : this.state.markers.map((marker, index) => {
+                const coords = {
+                    latitude: marker.truckLatitude,
+                    longitude: marker.truckLongitude
+                };
+
+                return (
+                    <Marker
+                        key={index}
+                        coordinate={{ latitude: coords.latitude, longitude: coords.longitude }}
+                        title={this.state.markers[0].name}
+                        description={"Price: " + this.state.markers.price}
+                    />
+                )
+
+            })
     }
 
     render() {
@@ -75,6 +98,7 @@ export default class places extends Component {
                     title='Here I am!'
                     description="Here is how description works"
                 />
+                {this.renderTrucks()}
             </MapView>
         )
     }
