@@ -3,19 +3,21 @@ import { View, StyleSheet, FlatList, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 export default class places extends Component {
-    state = {
-        apiKey: '2zReQTlfVvoUM_NeXqba2jiYfbYN3e4LksUiFuivMlv_CsJc8hlMYvrVbZuM0ruv8sjpj-R6aljRzyyWBNVKvMyEEgPQI1oCadbsGV-kmpxACjunydwkOdVZmSwaXnYx',
-        userLatitude: 0,
-        userLongitude: 0,
-        markers: []
-    };
-
-    componentWillMount() {
-        this.findCoordinates();
+    constructor(props) {
+        super(props);
+        this.state = {
+            apiKey: '2zReQTlfVvoUM_NeXqba2jiYfbYN3e4LksUiFuivMlv_CsJc8hlMYvrVbZuM0ruv8sjpj-R6aljRzyyWBNVKvMyEEgPQI1oCadbsGV-kmpxACjunydwkOdVZmSwaXnYx',
+            userLatitude: 1,
+            userLongitude: 1,
+            markers: []
+        }
     }
-
     componentDidMount() {
         this.getData();
+    }
+
+    componentWillMount(){
+        this.findCoordinates();
     }
 
     findCoordinates = () => {
@@ -24,7 +26,6 @@ export default class places extends Component {
                 const latitude = Number(position.coords.latitude.toFixed(6));
                 const longitude = Number(position.coords.longitude.toFixed(6));
                 this.setState({ userLatitude: latitude, userLongitude: longitude });
-                console.log("Latitude: " + this.state.userLatitude + " Longitude: " + this.state.userLongitude + " When is this happening");
                 this.forceUpdate();
             });
     };
@@ -37,7 +38,8 @@ export default class places extends Component {
         })
             .then(response => response.json())
             .then(json => {
-                console.log("This is my JSON length: " + json.businesses.length);
+                console.log("This is how many Foodtrucks are around: " + json.businesses.length);
+                console.log(json.body.businesses[0]);
                 for (let i = 0; i < json.businesses.length; i++) {
                     console.log(i);
                     this.state.markers.push({
@@ -49,16 +51,15 @@ export default class places extends Component {
                         image_url: json.business[i].image_url,
                         phone: json.businesses[i].phone
                     });
-                    console.log("This is a food truck: " + markers[i]);
+                    this.setState({});
+                    console.log("This is a food truck: " + i);
                 }
-                this.forceUpdate();
             }),
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     }
 
     render() {
-        console.log("Latitude: " + this.state.userLatitude + " Longitude: " + this.state.userLongitude)
         return (
             <MapView
                 style={{ flex: 1 }}
