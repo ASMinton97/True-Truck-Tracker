@@ -41,7 +41,6 @@ export default class places extends Component {
                 let markersArray = [];
                 for (let i = 0; i < json.businesses.length; i++) {
                     markersArray.push({
-                        test: i,
                         name: json.businesses[i].name,
                         truckLatitude: json.businesses[i].coordinates.latitude,
                         truckLongitude: json.businesses[i].coordinates.longitude,
@@ -52,9 +51,8 @@ export default class places extends Component {
                         phone: json.businesses[i].phone
                     });
                 }
-                this.setState({ markers: [...this.state.markers, markersArray] });
+                this.setState({ markers: [...this.state.markers, markersArray], isLoading: false });
                 console.log(this.state.markers[0]);
-                this.setState({ isLoading: false });
                 this.forceUpdate();
             }),
             error => Alert.alert(error.message),
@@ -63,14 +61,15 @@ export default class places extends Component {
 
     renderTrucks() {
         if (this.state.markers[0].truckLatitude == null) {
+            console.log("Damn this is null reeeeee: " + this.state.markers[0].truckLatitude);
             return null;
         } else {
             return (
                 <Marker
                     key={index}
-                    coordinate={{ latitude: this.state.markers.truckLatitude, longitude: this.state.markers.truckLongitude }}
-                    title={this.state.markers.name}
-                    description={"Price: " + this.state.markers.price}
+                    coordinate={{ latitude: this.state.markers[0].truckLatitude, longitude: this.state.markers[0].truckLongitude }}
+                    title={this.state.markers[0].name}
+                    description={"Price: " + this.state.markers[0].price}
                 />
             )
         }
