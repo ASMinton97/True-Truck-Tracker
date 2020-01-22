@@ -14,9 +14,10 @@ export default class places extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.findCoordinates();
     }
+
 
     findCoordinates = () => {
         navigator.geolocation.getCurrentPosition(
@@ -26,7 +27,6 @@ export default class places extends Component {
                 this.setState({ userLatitude: latitude, userLongitude: longitude });
                 console.log('Latitude: ' + this.state.userLatitude + ' Longitude: ' + this.state.userLongitude);
                 this.getData();
-                this.forceUpdate();
             });
     };
 
@@ -41,35 +41,38 @@ export default class places extends Component {
                 let markersArray = [];
                 for (let i = 0; i < json.businesses.length; i++) {
                     markersArray.push({
+                        index: i,
                         name: json.businesses[i].name,
                         truckLatitude: json.businesses[i].coordinates.latitude,
                         truckLongitude: json.businesses[i].coordinates.longitude,
                         rating: json.businesses[i].rating,
                         price: json.businesses[i].price,
                         id: json.businesses[i].id,
-                        imageUrl: json.businesses[i].image_url,
-                        phone: json.businesses[i].phone
+                        image_url: json.businesses[i].image_url,
+                        phone: json.businesses[i].phones
                     });
                 }
-                this.setState({ markers: [...this.state.markers, markersArray], isLoading: false });
-                console.log(this.state.markers[0]);
-                this.forceUpdate();
+                this.setState({ markers: [...markers, markersArray] });
+                this.setState({ isLoading: false });
+                console.log(this.state.markers);
             }),
-            error => Alert.alert(error.message),
+            error => Alert.alert(error.message.name),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     }
 
     renderTrucks() {
         if (this.state.markers[0].truckLatitude == null) {
-            console.log("Damn this is null reeeeee: " + this.state.markers[0].truckLatitude);
+            console.log("this is null: " + this.state.markers[0].truckLatitude);
             return null;
         } else {
+            console.log('Hey this works you dummy');
             return (
                 <Marker
-                    key={index}
+                    key={this.state.markers[0].index}
                     coordinate={{ latitude: this.state.markers[0].truckLatitude, longitude: this.state.markers[0].truckLongitude }}
                     title={this.state.markers[0].name}
                     description={"Price: " + this.state.markers[0].price}
+                    pinColor='blue'
                 />
             )
         }
