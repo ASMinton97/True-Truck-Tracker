@@ -65,14 +65,14 @@ export default class places extends Component {
             console.log("this is null: " + this.state.markers[0].truckLatitude);
             return null;
         } else {
-            console.log('Hey this works you dummy');
+            // this.state.markers.map((index, markersArray))
             return (
                 <Marker
-                    key={this.state.markers[0].index}
-                    coordinate={{ latitude: this.state.markers[0].truckLatitude, longitude: this.state.markers[0].truckLongitude }}
-                    title={this.state.markers[0].name}
-                    description={"Price: " + this.state.markers[0].price}
-                    pinColor='blue'
+                    key={this.state.markers.index}
+                    coordinate={{ latitude: this.state.markers[1].truckLatitude, longitude: this.state.markers[1].truckLongitude }}
+                    title={this.state.markers[1].name}
+                    description={"Price: " + this.state.markers[1].price}
+                    pinColor='yellow'
                 />
             )
         }
@@ -88,8 +88,8 @@ export default class places extends Component {
                     region={{
                         latitude: this.state.userLatitude,
                         longitude: this.state.userLongitude,
-                        latitudeDelta: 0.1292,
-                        longitudeDelta: 0.1292
+                        latitudeDelta: 0.0115,
+                        longitudeDelta: 0.0115
                     }}
                 >
                     <Marker

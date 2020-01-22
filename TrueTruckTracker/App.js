@@ -12,13 +12,14 @@ export default class App extends React.Component {
       positionLatitude: null,
       positionLongitude: null,
       loading: false,
+      test: '',
       data: [],
       pageToken: '',
       refreshing: false,
       siteTitle: ''
     }
   };
-  
+
   render() {
     return (
       <Places/>
