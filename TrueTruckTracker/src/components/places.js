@@ -10,6 +10,7 @@ export default class places extends Component {
             userLatitude: 1,
             userLongitude: 1,
             markers: [],
+            testArray: [],
             isLoading: true,
         }
     }
@@ -38,7 +39,7 @@ export default class places extends Component {
         })
             .then(response => response.json())
             .then(json => {
-                let markersArray = [];
+                let markersArray = this.state.markers;
                 for (let i = 0; i < json.businesses.length; i++) {
                     markersArray.push({
                         index: i,
@@ -52,7 +53,6 @@ export default class places extends Component {
                         phone: json.businesses[i].phones
                     });
                 }
-                this.setState({ markers: [...markers, markersArray] });
                 this.setState({ isLoading: false });
                 console.log(this.state.markers);
             }),
@@ -79,26 +79,27 @@ export default class places extends Component {
     }
 
     render() {
-        return this.state.isLoading ?
-            null : this.state.markers.map((marker, index) => {
-                return (
-                    <MapView
-                        style={{ flex: 1 }}
-                        region={{
-                            latitude: this.state.userLatitude,
-                            longitude: this.state.userLongitude,
-                            latitudeDelta: 0.1292,
-                            longitudeDelta: 0.1292
-                        }}
-                    >
-                        <Marker
-                            coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
-                            title='Here I am!'
-                            description="Here is how description works"
-                        />
-                        {this.renderTrucks()}
-                    </MapView>
-                )
-            })
+        if (this.state.isLoading == true) {
+            return null;
+        } else {
+            return (
+                <MapView
+                    style={{ flex: 1 }}
+                    region={{
+                        latitude: this.state.userLatitude,
+                        longitude: this.state.userLongitude,
+                        latitudeDelta: 0.1292,
+                        longitudeDelta: 0.1292
+                    }}
+                >
+                    <Marker
+                        coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
+                        title='Here I am!'
+                        description="Here is how description works"
+                    />
+                    {this.renderTrucks()}
+                </MapView>
+            )
+        }
     }
 }
