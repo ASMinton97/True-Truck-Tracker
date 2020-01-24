@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/cute-png-pikachu-5.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FF1506"
+      "backgroundColor": "#FF4531"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
