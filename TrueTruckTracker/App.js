@@ -9,14 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      positionLatitude: null,
-      positionLongitude: null,
       loading: false,
-      test: '',
-      data: [],
-      pageToken: '',
-      refreshing: false,
-      siteTitle: ''
     }
   };
 

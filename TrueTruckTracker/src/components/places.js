@@ -10,7 +10,6 @@ export default class places extends Component {
             userLatitude: 1,
             userLongitude: 1,
             markers: [],
-            testArray: [],
             isLoading: true,
         }
     }
@@ -65,16 +64,16 @@ export default class places extends Component {
             console.log("this is null: " + this.state.markers[0].truckLatitude);
             return null;
         } else {
-            // this.state.markers.map((index, markersArray))
-            return (
-                <Marker
-                    key={this.state.markers.index}
-                    coordinate={{ latitude: this.state.markers[1].truckLatitude, longitude: this.state.markers[1].truckLongitude }}
-                    title={this.state.markers[1].name}
-                    description={"Price: " + this.state.markers[1].price}
-                    pinColor='yellow'
-                />
-            )
+            return this.state.markers.map((marker, index) => {
+                return (
+                    <MapView.Marker
+                        key= {index}
+                        coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
+                        title={marker.name}
+                        pinColor='yellow'
+                    />
+                )
+            })
         }
     }
 
