@@ -79,18 +79,6 @@ export default class places extends Component {
             //Here I am mapping the markers state array and putting the markers on the map
             return this.state.markers.map((marker, index) => {
                 return (
-<<<<<<< HEAD
-                    <Marker
-                        //The key is useful for if I need to access a particuar food truck later.
-                        key={index}
-                        //Here I am setting the coordinates of each food truck and placing them on the map
-                        coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
-                        pinColor='yellow'
-                        onPress={() => {
-                            this.props.navigation.navigate('Truck')
-                        }}
-                    />
-=======
                     <View>
                         <Marker
                             //The key is useful for if I need to access a particuar food truck later.
@@ -119,7 +107,6 @@ export default class places extends Component {
                             
                         </RBSheet>
                     </View>
->>>>>>> parent of 6bc4aeb... Trying some things. Ran into a stupid bug
                 )
             })
         }
