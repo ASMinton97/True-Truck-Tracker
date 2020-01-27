@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Alert, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Alert, Text, Image, AsyncStorage } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import RBSheet from 'react-native-raw-bottom-sheet';
+
+const TruckInformation = ({ name, rating, price, image, phone }) => {
+    return (
+        <View>
+            <Image source={{ uri: image }} style={{ resizeMode: 'contain' }} />
+            <Text>{name}</Text>
+            <Text>Phone Number: {phone}</Text>
+            <Text>Rating: {rating}</Text>
+            <Text>Price: {price}</Text>
+        </View>
+    )
+}
 
 export default class places extends Component {
     constructor(props) {
@@ -79,21 +91,21 @@ export default class places extends Component {
             return this.state.markers.map((marker, index) => {
                 return (
                     <View>
-                        <Marker
+                        <MapView.Marker
                             //The key is useful for if I need to access a particuar food truck later.
                             key={index}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'
                             onPress={() => {
-                                this[RBSheet + index].open();
+                                this.RBSheet.open();
                             }}
                         />
                         <RBSheet
                             ref={ref => {
-                                this[RBSheet + index] = ref;
+                                this.RBSheet = ref;
                             }}
-                            height={300}
+                            height={450}
                             duration={250}
                             closeOnDragDown={true}
                             customStyles={{
@@ -103,7 +115,7 @@ export default class places extends Component {
                                 }
                             }}
                         >
-                            
+                            <Text>Testing</Text>
                         </RBSheet>
                     </View>
                 )
