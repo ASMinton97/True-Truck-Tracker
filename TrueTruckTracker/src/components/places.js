@@ -73,6 +73,7 @@ export default class places extends Component {
                         phone: json.businesses[i].phone
                     });
                 }
+                AsyncStorage.setItem("data", JSON.stringify(markersArray));
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -90,34 +91,16 @@ export default class places extends Component {
             //Here I am mapping the markers state array and putting the markers on the map
             return this.state.markers.map((marker, index) => {
                 return (
-                    <View>
-                        <MapView.Marker
-                            //The key is useful for if I need to access a particuar food truck later.
-                            key={index}
-                            //Here I am setting the coordinates of each food truck and placing them on the map
-                            coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
-                            pinColor='yellow'
-                            onPress={() => {
-                                this.RBSheet.open();
-                            }}
-                        />
-                        <RBSheet
-                            ref={ref => {
-                                this.RBSheet = ref;
-                            }}
-                            height={450}
-                            duration={250}
-                            closeOnDragDown={true}
-                            customStyles={{
-                                container: {
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }
-                            }}
-                        >
-                            <Text>Testing</Text>
-                        </RBSheet>
-                    </View>
+                    <Marker
+                        //The key is useful for if I need to access a particuar food truck later.
+                        key={index}
+                        //Here I am setting the coordinates of each food truck and placing them on the map
+                        coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
+                        pinColor='yellow'
+                        onPress={() => {
+                            this.props.navigation.navigate('Truck')
+                        }}
+                    />
                 )
             })
         }

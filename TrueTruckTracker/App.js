@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View, ActivityIndicator, FlatList, Button } from "react-native";
 import { List, ListItem } from 'react-native-elements';
 import MapView from "react-native-maps";
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import Places from './src/components/places';
-var _ = require('lodash');
+import TruckInformation from './src/components/truckInformation';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,7 +17,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Places/>
+      <Places />
     );
   }
 }
