@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Alert, Text, Image, AsyncStorage } from 'react-native';
+import { View, StyleSheet, FlatList, Alert, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import RBSheet from 'react-native-raw-bottom-sheet';
-
-const TruckInformation = ({ name, rating, price, image, phone }) => {
-    return (
-        <View>
-            <Image source={{ uri: image }} style={{ resizeMode: 'contain' }} />
-            <Text>{name}</Text>
-            <Text>Phone Number: {phone}</Text>
-            <Text>Rating: {rating}</Text>
-            <Text>Price: {price}</Text>
-        </View>
-    )
-}
 
 export default class places extends Component {
     constructor(props) {
@@ -91,6 +79,7 @@ export default class places extends Component {
             //Here I am mapping the markers state array and putting the markers on the map
             return this.state.markers.map((marker, index) => {
                 return (
+<<<<<<< HEAD
                     <Marker
                         //The key is useful for if I need to access a particuar food truck later.
                         key={index}
@@ -101,6 +90,36 @@ export default class places extends Component {
                             this.props.navigation.navigate('Truck')
                         }}
                     />
+=======
+                    <View>
+                        <Marker
+                            //The key is useful for if I need to access a particuar food truck later.
+                            key={index}
+                            //Here I am setting the coordinates of each food truck and placing them on the map
+                            coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
+                            pinColor='yellow'
+                            onPress={() => {
+                                this[RBSheet + index].open();
+                            }}
+                        />
+                        <RBSheet
+                            ref={ref => {
+                                this[RBSheet + index] = ref;
+                            }}
+                            height={300}
+                            duration={250}
+                            closeOnDragDown={true}
+                            customStyles={{
+                                container: {
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }
+                            }}
+                        >
+                            
+                        </RBSheet>
+                    </View>
+>>>>>>> parent of 6bc4aeb... Trying some things. Ran into a stupid bug
                 )
             })
         }
