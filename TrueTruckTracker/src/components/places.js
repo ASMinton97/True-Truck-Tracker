@@ -61,7 +61,6 @@ export default class places extends Component {
                         phone: json.businesses[i].phone
                     });
                 }
-                AsyncStorage.setItem("data", JSON.stringify(markersArray));
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -87,25 +86,9 @@ export default class places extends Component {
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'
                             onPress={() => {
-                                this[RBSheet + index].open();
+                                console.log("Hey this is supposed to move to the truck information page");
                             }}
                         />
-                        <RBSheet
-                            ref={ref => {
-                                this[RBSheet + index] = ref;
-                            }}
-                            height={300}
-                            duration={250}
-                            closeOnDragDown={true}
-                            customStyles={{
-                                container: {
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }
-                            }}
-                        >
-                            
-                        </RBSheet>
                     </View>
                 )
             })
