@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Alert, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Alert, Text, AsyncStorage } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -61,6 +61,8 @@ export default class places extends Component {
                         phone: json.businesses[i].phone
                     });
                 }
+                //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
+                    //AsyncStorage.setItem("data", JSON.stringify(markersArray))
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -82,6 +84,7 @@ export default class places extends Component {
                         <Marker
                             //The key is useful for if I need to access a particuar food truck later.
                             key={index}
+                            title={marker.name}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'

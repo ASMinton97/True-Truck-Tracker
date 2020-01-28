@@ -31,6 +31,7 @@ export default class truckInformation extends Component {
             }
             this.setState({ markers: value });
             console.log(value);
+            AsyncStorage.removeItem("data");
         })
     }
 
@@ -49,7 +50,7 @@ export default class truckInformation extends Component {
         }
         return (
             <View>
-                <Text>We are now on the truck information page</Text>
+                {truckInfo}
             </View>
         )
     }

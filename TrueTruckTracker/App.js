@@ -6,17 +6,34 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-    }
-  };
-
+class Place extends React.Component {
+  static navigationOptions = {
+    headerShown: false
+  }
   render() {
     return (
       <Places />
     );
   }
 }
+
+class Truck extends React.Component{
+  static navigationOptions = {
+    headerShown: false
+  }
+  render(){
+    return(
+      <TruckInformation/>
+    )
+  }
+}
+
+const AppNavigator = createStackNavigator({
+  Place: Place,
+  Truck: Truck
+},
+  {
+    initialRouteName: 'Place',
+  });
+
+export default createAppContainer(AppNavigator);
