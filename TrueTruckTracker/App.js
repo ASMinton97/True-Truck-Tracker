@@ -19,7 +19,13 @@ class Place extends React.Component {
 
 class Truck extends React.Component{
   static navigationOptions = {
-    headerShown: false
+    title: 'Truck Information',
+    headerShown: true,
+    headerTintColor: '#FFF',
+    headerStyle:{
+      backgroundColor: '#FF4531',
+      elevation: 0,
+    }
   }
   render(){
     return(

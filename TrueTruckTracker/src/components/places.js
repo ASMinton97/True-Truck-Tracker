@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Alert, Text, AsyncStorage } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import TruckInformation from './truckInformation';
 
-export default class places extends Component {
+
+class Place extends Component {
+    static navigationOptions = {
+        headerShown: false
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -62,7 +68,7 @@ export default class places extends Component {
                     });
                 }
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
-                    //AsyncStorage.setItem("data", JSON.stringify(markersArray))
+                AsyncStorage.setItem("data", JSON.stringify(markersArray))
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -84,12 +90,14 @@ export default class places extends Component {
                         <Marker
                             //The key is useful for if I need to access a particuar food truck later.
                             key={index}
-                            title={marker.name}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'
                             onPress={() => {
                                 console.log("Hey this is supposed to move to the truck information page");
+                                this.props.navigation.navigate('Truck', {
+                                    index: index
+                                });
                             }}
                         />
                     </View>
@@ -128,3 +136,30 @@ export default class places extends Component {
         }
     }
 }
+class Truck extends React.Component {
+    static navigationOptions = {
+        title: 'Truck Information',
+        headerShown: true,
+        headerTintColor: '#FFF',
+        headerStyle: {
+            backgroundColor: '#FF4531',
+            elevation: 0,
+        }
+    }
+    render() {
+        return (
+            <TruckInformation />
+        )
+    }
+}
+
+const AppNavigator = createStackNavigator({
+    Place: Place,
+    Truck: Truck
+},
+    {
+        initialRouteName:'Place'
+    }
+);
+
+export default createAppContainer(AppNavigator);
