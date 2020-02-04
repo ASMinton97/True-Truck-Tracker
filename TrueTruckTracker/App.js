@@ -1,69 +1,79 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, FlatList, Button } from "react-native";
+import { StyleSheet, Text, View, Dimensions, FlatList, TouchableOpacity, Image } from "react-native";
 import Places from './src/components/places';
 import TruckInformation from './src/components/truckInformation';
+import Settings from './src/components/settings'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
-const navigator = createDrawerNavigator({
-  Home: { screen: Places }
+const myDrawerNavigator = createDrawerNavigator({
+  Home: {
+    screen: Places
+  },
+  TruckInfo: {
+    screen: TruckInformation
+  },
+  Settings: {
+    screen: Settings
+  }
 },
   {
-    drawerType: 'slide',
-    drawerWidth: 200
+    initialRouteName: 'TruckInfo',
+    navigationOptions: navigationOptionsHeader
   }
 );
 
-class Place extends React.Component {
-  static navigationOptions = {
-
-    headerShown: false
-  }
-  render() {
-    return (
-      <Places />
-    );
-  }
-}
-
-class Truck extends React.Component {
-  static navigationOptions = {
-    title: 'Truck Information',
+const navigationOptionsHeader = ({ navigation }) => {
+  return {
+    headerTitle: 'Screen',
     headerShown: true,
     headerTintColor: '#FFF',
     headerStyle: {
       backgroundColor: '#FF4531',
       elevation: 0,
+    },
+
+    };
+  };
+
+
+  class Place extends React.Component {
+    render() {
+      return (
+
+        <Places />
+      );
     }
   }
-  render() {
-    return (
-      <TruckInformation />
-    )
-  }
-}
 
-class Settings extends React.Component {
-  static navigationOptions = {
-    headerShown: false
+  class Truck extends React.Component {
+    render() {
+      return (
+        <View style={{ flex: 1 }}>
+          <Text> Can I put text here?</Text>
+          <TruckInformation />
+        </View>
+      )
+    }
   }
-  render() {
-    return (
-      <View>
-        <Text>This is the settings page</Text>
-      </View>
-    )
+
+  class Setting extends React.Component {
+    static navigationOptions = {
+      headerShown: false
+    }
+    render() {
+      return (
+        <Settings/>
+      )
+    }
   }
-}
 
-const AppNavigator = createStackNavigator({
-  Place: Place,
-  Truck: Truck,
-  Setting: Settings
-},
-  {
-    initialRouteName: 'Place',
-  });
+  const AppContainer = createAppContainer(myDrawerNavigator);
 
-export default createAppContainer(AppNavigator);
+  class App extends React.Component {
+    render() {
+      return <AppContainer />;
+    }
+  }
+  export default App;

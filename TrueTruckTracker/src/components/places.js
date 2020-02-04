@@ -161,8 +161,8 @@ class Place extends Component {
             return (
                 //This is just the map of where the user is
                 <View style={styles.container}>
+                    <View style={styles.mapDrawerOverlay} />
                     <MapView
-
                         style={styles.mapContainer}
                         region={{
                             latitude: this.state.userLatitude,
@@ -180,7 +180,6 @@ class Place extends Component {
                         {/*This goes to the function that I use to render food trucks */}
                         {this.renderTrucks()}
                     </MapView>
-                    <View style={styles.mapDrawerOverlay} />
                 </View>
             )
         }
@@ -200,7 +199,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: Screen.width,
         height: Dimensions.get('window').height,
-        position: 'absolute'
     },
     mapDrawerOverlay: {
         position: 'absolute',
