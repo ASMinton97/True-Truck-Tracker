@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Text, Image, AsyncStorage, Linking } from 'react-native';
 
-const TruckInformation = ({ name, rating, price, image, phone }) => {
+const TruckInformation = ({ name, rating, price, image, phone, reviewCount }) => {
     return (
         <View style={{ flex: 1 }}>
             <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 300, width: 300, justifyContent: 'center', alignItems: 'center', marginLeft: 55 }} />
             <Text style={{ fontSize: 35, marginLeft: 55, fontFamily: 'Roboto' }}>{name}</Text>
-            <Text style={{ fontSize: 13, marginLeft: 55 }}>Rating: {rating}</Text>
+            <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Rating: {rating}</Text>
+            <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row'}}>Review Count: {reviewCount}</Text>
             <TouchableOpacity
                 onPress={() => {
                     Linking.openURL('tel:' + phone )
@@ -37,7 +38,7 @@ export default class truckInformation extends Component {
             }
             this.setState({ markers: value });
             console.log(value);
-            AsyncStorage.removeItem("data");
+            //AsyncStorage.removeItem("data");
         })
     }
 
@@ -51,6 +52,7 @@ export default class truckInformation extends Component {
                     name={this.state.markers[i].name}
                     phone={this.state.markers[i].phone}
                     rating={this.state.markers[i].rating}
+                    reviewCount={this.state.markers[i].reviewCount}
                     price={this.state.markers[i].price}
                 />
             )

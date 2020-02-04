@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Alert, Text, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert, Text, AsyncStorage } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Overlay } from 'react-native-elements';
 import TruckInformation from './truckInformation';
 
 
@@ -18,6 +19,7 @@ class Place extends Component {
             userLongitude: 1,
             markers: [],
             isLoading: true,
+            isVisible: false
         }
     }
 
@@ -64,7 +66,8 @@ class Place extends Component {
                         price: json.businesses[i].price,
                         id: json.businesses[i].id,
                         image_url: json.businesses[i].image_url,
-                        phone: json.businesses[i].phone
+                        phone: json.businesses[i].phone,
+                        reviewCount: json.businesses[i].review_count
                     });
                 }
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
@@ -93,13 +96,19 @@ class Place extends Component {
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'
+
                             onPress={() => {
                                 console.log("Hey this is supposed to move to the truck information page");
-                                this.props.navigation.navigate('Truck', {
-                                    index: index
-                                });
+                                console.log("isVisible is: " + this.state.isVisible);
+                                this.setState({ isVisible: true });
                             }}
+
                         />
+                        <Overlay
+                            isVisible={this.state.isVisible}
+                            onBackdropPress={() => this.setState({ isVisible: false })}
+                        >
+                        </Overlay>
                     </View>
                 )
             })
@@ -114,28 +123,57 @@ class Place extends Component {
         } else {
             return (
                 //This is just the map of where the user is
-                <MapView
-                    style={{ flex: 1 }}
-                    region={{
-                        latitude: this.state.userLatitude,
-                        longitude: this.state.userLongitude,
-                        latitudeDelta: 0.0115,
-                        longitudeDelta: 0.0115
-                    }}
-                >
-                    {/*The marker here is the users location that I found in the findCoordinates() function*/}
-                    <Marker
-                        coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
-                        title='Here I am!'
-                        description="Here is how description works"
-                    />
-                    {/*This goes to the function that I use to render food trucks */}
-                    {this.renderTrucks()}
-                </MapView>
+                <View style={styles.container}>
+                    <MapView
+
+                        style={styles.mapContainer}
+                        region={{
+                            latitude: this.state.userLatitude,
+                            longitude: this.state.userLongitude,
+                            latitudeDelta: 0.0115,
+                            longitudeDelta: 0.0115
+                        }}
+                    >
+                        {/*The marker here is the users location that I found in the findCoordinates() function*/}
+                        <Marker
+                            coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
+                            title='Here I am!'
+                            description="Here is how description works"
+                        />
+                        {/*This goes to the function that I use to render food trucks */}
+                        {this.renderTrucks()}
+                    </MapView>
+                    <View style={styles.mapDrawerOverlay} />
+                </View>
             )
         }
     }
 }
+
+const Screen = {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+};
+//I am using these styles so I can use my drawer navigation
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    mapContainer: {
+        flex: 1,
+        width: Screen.width,
+        height: Dimensions.get('window').height,
+    },
+    mapDrawerOverlay: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        opacity: 0.0,
+        height: Dimensions.get('window').height,
+        width: 20,
+    },
+});
+
 class Truck extends React.Component {
     static navigationOptions = {
         title: 'Truck Information',
@@ -158,7 +196,7 @@ const AppNavigator = createStackNavigator({
     Truck: Truck
 },
     {
-        initialRouteName:'Place'
+        initialRouteName: 'Place'
     }
 );
 
