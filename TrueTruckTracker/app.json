@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/cute-png-pikachu-5.png",
+      "image": "./assets/TrueTruckTrackerLogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#FF4531"
     },

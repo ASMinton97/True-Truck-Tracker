@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions, Alert, Text, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert, Text, AsyncStorage, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -25,6 +25,16 @@ class Place extends Component {
 
     componentDidMount() {
         this.findCoordinates();
+        // AsyncStorage.getItem("data").then(value => {
+        //     if (!value) {
+        //         value = [];
+        //     } else {
+        //         value = JSON.parse(value);
+        //     }
+        //     this.setState({ markers: value });
+        //     console.log(value);
+        //     AsyncStorage.removeItem("data");
+        // })
     }
 
     //This function is meant for finding the user's coordinates
@@ -58,7 +68,7 @@ class Place extends Component {
                 for (let i = 0; i < json.businesses.length; i++) {
                     //This is pushing all the data that I need to access later, such as name of the truck, phone number, price, and rating.
                     markersArray.push({
-                        index: i,
+                        key: i + 10000,
                         name: json.businesses[i].name,
                         truckLatitude: json.businesses[i].coordinates.latitude,
                         truckLongitude: json.businesses[i].coordinates.longitude,
@@ -70,8 +80,21 @@ class Place extends Component {
                         reviewCount: json.businesses[i].review_count
                     });
                 }
+
+                markersArray.push({
+                    key: 1,
+                    name: "Test Truck",
+                    truckLatitude: 2,
+                    truckLongitude: 2,
+                    rating: 1.5,
+                    price: "$",
+                    id: 'dfj34fj3409j34',
+                    image_url: 'https://images.unsplash.com/photo-1573935146153-f6322e84d1e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                    phone: "+1000000000",
+                    reviewCount: 3
+                })
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
-                AsyncStorage.setItem("data", JSON.stringify(markersArray))
+                AsyncStorage.setItem("data", JSON.stringify(markersArray));
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -89,25 +112,39 @@ class Place extends Component {
             //Here I am mapping the markers state array and putting the markers on the map
             return this.state.markers.map((marker, index) => {
                 return (
-                    <View>
+                    <View style={{ position: 'absolute' }}>
                         <Marker
                             //The key is useful for if I need to access a particuar food truck later.
-                            key={index}
+                            key={marker.index}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='yellow'
 
                             onPress={() => {
                                 console.log("Hey this is supposed to move to the truck information page");
-                                console.log("isVisible is: " + this.state.isVisible);
                                 this.setState({ isVisible: true });
                             }}
 
                         />
                         <Overlay
+                            style={{ position: 'absolute' }}
                             isVisible={this.state.isVisible}
-                            onBackdropPress={() => this.setState({ isVisible: false })}
+                            onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
                         >
+                            <View>
+                                <Image source={{ uri: marker.image_url }} style={{ resizeMode: 'contain', height: 300, width: 300, justifyContent: 'center', alignItems: 'center', marginLeft: 55 }} />
+                                <Text style={{ fontSize: 35, marginLeft: 55, fontFamily: 'Roboto' }}>{marker.name}</Text>
+                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Rating: {marker.rating}</Text>
+                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Review Count: {marker.reviewCount}</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Linking.openURL('tel:' + phone)
+                                    }}
+                                >
+                                    <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Phone: {marker.phone}</Text>
+                                </TouchableOpacity>
+                                <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Price: {marker.price}</Text>
+                            </View>
                         </Overlay>
                     </View>
                 )
@@ -163,6 +200,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: Screen.width,
         height: Dimensions.get('window').height,
+        position: 'absolute'
     },
     mapDrawerOverlay: {
         position: 'absolute',
