@@ -2,7 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View, Dimensions, FlatList, TouchableOpacity, Image } from "react-native";
 import Places from './src/components/places';
 import TruckInformation from './src/components/truckInformation';
-import Settings from './src/components/settings'
+import Settings from './src/components/settings';
+import TruckList from './src/components/truckList';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -16,6 +17,9 @@ const myDrawerNavigator = createDrawerNavigator({
   },
   Settings: {
     screen: Settings
+  },
+  TruckList: {
+    screen: TruckList
   }
 },
   {
@@ -65,6 +69,14 @@ class Setting extends React.Component {
   render() {
     return (
       <Settings />
+    )
+  }
+}
+
+class TruckListPage extends React.Component {
+  render () {
+    return(
+      <TruckList/>
     )
   }
 }
