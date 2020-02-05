@@ -19,8 +19,10 @@ const myDrawerNavigator = createDrawerNavigator({
   }
 },
   {
-    initialRouteName: 'TruckInfo',
-    navigationOptions: navigationOptionsHeader
+    initialRouteName: 'Home',
+    navigationOptions: navigationOptionsHeader,
+    edgeWidth: 30,
+    drawerType: 'front'
   }
 );
 
@@ -34,46 +36,44 @@ const navigationOptionsHeader = ({ navigation }) => {
       elevation: 0,
     },
 
-    };
   };
+};
 
 
-  class Place extends React.Component {
-    render() {
-      return (
-
-        <Places />
-      );
-    }
+class Place extends React.Component {
+  render() {
+    return (
+      <Places />
+    );
   }
+}
 
-  class Truck extends React.Component {
-    render() {
-      return (
-        <View style={{ flex: 1 }}>
-          <Text> Can I put text here?</Text>
-          <TruckInformation />
-        </View>
-      )
-    }
+class Truck extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <TruckInformation />
+      </View>
+    )
   }
+}
 
-  class Setting extends React.Component {
-    static navigationOptions = {
-      headerShown: false
-    }
-    render() {
-      return (
-        <Settings/>
-      )
-    }
+class Setting extends React.Component {
+  static navigationOptions = {
+    headerShown: false
   }
-
-  const AppContainer = createAppContainer(myDrawerNavigator);
-
-  class App extends React.Component {
-    render() {
-      return <AppContainer />;
-    }
+  render() {
+    return (
+      <Settings />
+    )
   }
-  export default App;
+}
+
+const AppContainer = createAppContainer(myDrawerNavigator);
+
+class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
+export default App;

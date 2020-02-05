@@ -59,13 +59,7 @@ export default class truckInformation extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <TouchableOpacity
-                    onPress={() => { this.props.navigation.toggleDrawer() }}
-                >
-                    <Image source={{uri: 'https://cdn4.iconfinder.com/data/icons/social-messaging-productivity-black-4/127000/18-512.png'}} style={{ width: 50, height: 50, marginLeft: 5, marginTop: 25 }} />
-                </TouchableOpacity>
-
-                {truckInfo[1]}
+                    {truckInfo[1]}
             </View>
         )
     }

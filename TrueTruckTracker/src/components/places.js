@@ -161,7 +161,6 @@ class Place extends Component {
             return (
                 //This is just the map of where the user is
                 <View style={styles.container}>
-                    <View style={styles.mapDrawerOverlay} />
                     <MapView
                         style={styles.mapContainer}
                         region={{
@@ -180,6 +179,7 @@ class Place extends Component {
                         {/*This goes to the function that I use to render food trucks */}
                         {this.renderTrucks()}
                     </MapView>
+                    <View style={styles.mapDrawerOverlay} />
                 </View>
             )
         }
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         top: 0,
         opacity: 0.0,
         height: Dimensions.get('window').height,
-        width: 20,
+        width: 30,
     },
 });
 
