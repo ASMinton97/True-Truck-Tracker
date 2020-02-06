@@ -126,26 +126,6 @@ class Place extends Component {
                             }}
 
                         />
-                        <Overlay
-                            style={{ position: 'absolute' }}
-                            isVisible={this.state.isVisible}
-                            onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
-                        >
-                            <View>
-                                <Image source={{ uri: marker.image_url }} style={{ resizeMode: 'contain', height: 300, width: 300, justifyContent: 'center', alignItems: 'center', marginLeft: 55 }} />
-                                <Text style={{ fontSize: 35, marginLeft: 55, fontFamily: 'Roboto' }}>{marker.name}</Text>
-                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Rating: {marker.rating}</Text>
-                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Review Count: {marker.reviewCount}</Text>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        Linking.openURL('tel:' + phone)
-                                    }}
-                                >
-                                    <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Phone: {marker.phone}</Text>
-                                </TouchableOpacity>
-                                <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Price: {marker.price}</Text>
-                            </View>
-                        </Overlay>
                     </View>
                 )
             })
@@ -180,6 +160,26 @@ class Place extends Component {
                         {this.renderTrucks()}
                     </MapView>
                     <View style={styles.mapDrawerOverlay} />
+                    <Overlay
+                            style={{ position: 'absolute' }}
+                            isVisible={this.state.isVisible}
+                            onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
+                        >
+                            <View>
+                                <Image source={{ uri: this.state.markers[1].image_url }} style={{ resizeMode: 'contain', height: 300, width: 300, justifyContent: 'center', alignItems: 'center', marginLeft: 55 }} />
+                                <Text style={{ fontSize: 35, marginLeft: 55, fontFamily: 'Roboto' }}>{this.state.markers[1].name}</Text>
+                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Rating: {this.state.markers[1].rating}</Text>
+                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Review Count: {this.state.markers[1].reviewCount}</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Linking.openURL('tel:' + phone)
+                                    }}
+                                >
+                                    <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Phone: {this.state.markers[1].phone}</Text>
+                                </TouchableOpacity>
+                                <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Price: {this.state.markers[1].price}</Text>
+                            </View>
+                        </Overlay>
                 </View>
             )
         }
