@@ -166,18 +166,18 @@ class Place extends Component {
                             onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
                         >
                             <View>
-                                <Image source={{ uri: this.state.markers[1].image_url }} style={{ resizeMode: 'contain', height: 300, width: 300, justifyContent: 'center', alignItems: 'center', marginLeft: 55 }} />
-                                <Text style={{ fontSize: 35, marginLeft: 55, fontFamily: 'Roboto' }}>{this.state.markers[1].name}</Text>
-                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Rating: {this.state.markers[1].rating}</Text>
-                                <Text style={{ fontSize: 13, marginLeft: 55, flexDirection: 'row' }}>Review Count: {this.state.markers[1].reviewCount}</Text>
+                                <Image source={{ uri: this.state.markers[1].image_url }} style={{ resizeMode: 'contain', height: 300, width: 312,}} />
+                                <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[1].name}</Text>
+                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[1].rating}</Text>
+                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[1].reviewCount}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
                                         Linking.openURL('tel:' + phone)
                                     }}
                                 >
-                                    <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Phone: {this.state.markers[1].phone}</Text>
+                                    <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[1].phone}</Text>
                                 </TouchableOpacity>
-                                <Text style={{ fontSize: 20, marginLeft: 55, marginTop: 25 }}>Price: {this.state.markers[1].price}</Text>
+                                <Text style={{ fontSize: 20, marginTop: 25 }}>Price: {this.state.markers[1].price}</Text>
                             </View>
                         </Overlay>
                 </View>
