@@ -5,6 +5,7 @@ import SettingsList from 'react-native-settings-list';
 export default class Settings extends Component {
     constructor(props) {
         super(props);
+        this.onDarkThemeChange = this.onDarkThemeChange.bind(this);
         this.state = {
             switchValue: false,
 
@@ -26,19 +27,17 @@ export default class Settings extends Component {
                                 }
                                 hasSwitch={true}
                                 switchState={this.state.switchValue}
-                                switchOnValueChange={this.onValueChange}
+                                switchOnValueChange={this.onDarkThemeChange}
                                 hasNavArrow={false}
                                 title='Dark Theme'
-                            >
-
-                            </SettingsList.Item>
+                            />
                     </SettingsList>
                 </View>
             </View>
         )
     }
 
-    onValueChange() {
-        console.log("Switch Value is: " + this.state.switchValue);
+    onDarkThemeChange(){
+        this.setState({switchValue: !this.state.switchValue})
     }
 }
