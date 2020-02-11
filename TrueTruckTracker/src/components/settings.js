@@ -16,23 +16,23 @@ export default class Settings extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <View style={styles.settingsBackgroundTitleDark}>
-                    <Text style={styles.settingsTitleDark }>Settings</Text>
+                <View style={[(this.state.switchValue) ? styles.settingsBackgroundTitleDark: styles.settingsTitleBackgroundLight]}>
+                    <Text style={[(this.state.switchValue) ? styles.settingsTitleDark : styles.settingsTitleLight]}>Settings</Text>
                 </View>
-                <View style={styles.settingsBackgroundDark}>
-                    <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
-                        <SettingsList.Header headerStyle={styles.settingsHeaderDark} headerText='Theme' />
+                <View style={[(this.state.switchValue) ? styles.settingsBackgroundDark: styles.settingsBackgroundLight]}>
+                    <SettingsList borderColor={this.state.switchValue ? '#525252': '#c8c7cc'} defaultItemSize={50}>
+                        <SettingsList.Header headerStyle={[(this.state.switchValue) ? styles.settingsHeaderDark: styles.settingsHeaderLight]} headerText='Theme' />
                         <SettingsList.Item
                             icon={
-                                <Image style={styles.settingsIconDark} source={{ uri: 'https://i.ya-webdesign.com/images/png-black-and-white-3.png' }} />
+                                <Image style={[(this.state.switchValue) ? styles.settingsIconDark: styles.settingsIconLight]} source={[(this.state.switchValue) ?{uri:'https://i.imgur.com/WLHv5HM.png'} : {uri:'https://i.imgur.com/PJHWQjJ.png'}]} />
                             }
                             hasSwitch={true}
                             switchState={this.state.switchValue}
                             switchOnValueChange={this.onDarkThemeChange}
                             hasNavArrow={false}
                             title='Dark Theme'
-                            titleStyle={styles.settingsItemDark}
-                            backgroundColor='#414141'
+                            titleStyle={[(this.state.switchValue) ? styles.settingsItemDark: styles.settingsItemLight]}
+                            backgroundColor={this.state.switchValue ? '#414141': '#FFFFFF'}
                         />
                     </SettingsList>
                 </View>
@@ -67,13 +67,20 @@ const styles = StyleSheet.create({
     },
     settingsHeaderLight:{
         marginTop: 15, 
-        color: '#000000'
+        color: '#000000',
+        fontWeight:'bold'
     },
     settingsIconLight:{
         height: 30, 
         width: 30, 
         marginTop: 9, 
         marginLeft: 12
+    },
+    settingsItemLight:{
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#000000',
+        borderColor:'#525252'
     },
     settingsBackgroundTitleDark:{
         borderBottomWidth: 1,
