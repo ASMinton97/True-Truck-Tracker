@@ -5,18 +5,18 @@ import TruckInformation from './src/components/truckInformation';
 import Settings from './src/components/settings';
 import TruckList from './src/components/truckList';
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Stitch, AnonomyousCredential } from 'mongodb-stitch-react-native-sdk';
 
 const myDrawerNavigator = createDrawerNavigator({
   Home: {
     screen: Places
   },
-  Settings: {
-    screen: Settings
-  },
   TruckList: {
     screen: TruckList
+  },
+  Settings: {
+    screen: Settings
   }
 },
   {
