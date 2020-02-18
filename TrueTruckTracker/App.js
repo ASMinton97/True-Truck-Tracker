@@ -12,9 +12,6 @@ const myDrawerNavigator = createDrawerNavigator({
   Home: {
     screen: Places
   },
-  TruckInfo: {
-    screen: TruckInformation
-  },
   Settings: {
     screen: Settings
   },

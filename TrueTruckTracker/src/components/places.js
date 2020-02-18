@@ -80,19 +80,6 @@ class Place extends Component {
                         reviewCount: json.businesses[i].review_count
                     });
                 }
-
-                markersArray.push({
-                    key: 1,
-                    name: "Test Truck",
-                    truckLatitude: 2,
-                    truckLongitude: 2,
-                    rating: 1.5,
-                    price: "$",
-                    id: 'dfj34fj3409j34',
-                    image_url: 'https://images.unsplash.com/photo-1573935146153-f6322e84d1e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-                    phone: "+1000000000",
-                    reviewCount: 3
-                })
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
                 AsyncStorage.setItem("data", JSON.stringify(markersArray));
                 //Setting the isLoading state to false here will then actually render the map and make it visible for the user
@@ -118,7 +105,7 @@ class Place extends Component {
                             key={marker.index}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
-                            pinColor='yellow'
+                            pinColor='red'
 
                             onPress={() => {
                                 console.log("Hey this is supposed to move to the truck information page");
@@ -154,7 +141,8 @@ class Place extends Component {
                         <Marker
                             coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
                             title='Here I am!'
-                            description="Here is how description works"
+                            description="Lets find a food truck for you to eat at!"
+                            pinColor='yellow'
                         />
                         {/*This goes to the function that I use to render food trucks */}
                         {this.renderTrucks()}
