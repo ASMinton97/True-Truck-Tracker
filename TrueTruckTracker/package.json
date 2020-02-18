@@ -13,14 +13,11 @@
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
     "expo": "~36.0.0",
-<<<<<<< Updated upstream
-=======
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "mongodb-stitch-browser-sdk": "^4.8.0",
     "mongodb-stitch-react-native-sdk": "^4.8.0",
     "mongoose": "^5.9.0",
->>>>>>> Stashed changes
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",

@@ -4,6 +4,8 @@ import Places from './src/components/places';
 import TruckInformation from './src/components/truckInformation';
 import Settings from './src/components/settings';
 import TruckList from './src/components/truckList';
+import Login from './src/components/login';
+import Register from './src/components/register';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -20,12 +22,21 @@ const myDrawerNavigator = createDrawerNavigator({
   }
 },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Register',
     navigationOptions: navigationOptionsHeader,
     edgeWidth: 30,
     drawerType: 'front'
   }
 );
+
+const LoginNavigator = createStackNavigator({
+    Login: {
+      screen: Login
+    },
+    Register:{
+      screen: Register
+    }
+})
 
 const navigationOptionsHeader = ({ navigation }) => {
   return {
