@@ -6,6 +6,7 @@ import Settings from './src/components/settings';
 import TruckList from './src/components/truckList';
 import Login from './src/components/login';
 import Register from './src/components/register';
+import Account from './src/components/account';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -13,6 +14,9 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 const myDrawerNavigator = createDrawerNavigator({
   Home: {
     screen: Places
+  },
+  Account: {
+    screen: Account
   },
   Settings: {
     screen: Settings
@@ -22,13 +26,10 @@ const myDrawerNavigator = createDrawerNavigator({
   },
   Login: {
     screen: Login
-  },
-  Register: {
-    screen: Register
   }
 }, 
 {
-  initialRouteName: 'Login',
+  initialRouteName: 'Home',
   navigationOptions: navigationOptionsHeader,
   edgeWidth: 30,
   drawerType: 'front'

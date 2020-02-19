@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Button, Text, TextInput, AsyncStorage, Linking } from 'react-native';
-import SettingsList from 'react-native-settings-list';
 import { NavigationContainer, DefaultTheme, } from '@react-navigation/native';
 import LoginPage from './login';
 import { createAppContainer } from 'react-navigation';
