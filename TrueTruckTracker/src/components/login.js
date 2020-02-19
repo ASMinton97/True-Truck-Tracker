@@ -1,28 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Text, Button, AsyncStorage, Linking, TextInput } from 'react-native';
-import Register from './register';
-import Places from './places';
-import { NavigationContainer, DefaultTheme, } from '@react-navigation/native';
+import RegisterPage from './register';
+import PlacesPage from './places';
+import { NavigationContainer } from '@react-navigation/native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-const Stack = createStackNavigator({
-    Login: {
-        screen: Login
-    },
-    Register: {
-        screen: Register
-    },
-    Places: {
-        screen: Places
+class Login extends React.Component {
+    static navigationOptions={
+        headerShown: false,
     }
-},
-{
-    initialRouteName: 'Login'
-}
-);
-
-class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,7 +39,6 @@ class Login extends Component {
 
     render() {
         return (
-            <NavigationContainer>
                 <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center', backgroundColor: '#FF4531' }}>
                     <View style={{ flex: .6, marginVertical: 20, marginHorizontal: 20, borderWidth: 3, borderRadius: 20, backgroundColor: '#FFF', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 28, color: '#000' }}>True Truck Tracker</Text>
@@ -64,12 +50,11 @@ class Login extends Component {
                             color='#FF4531'
                             onPress={this.checkLogin}
                         />
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {this.props.navigation.navigate('Register')}}>
                             <TextInput style={{ marginTop: 20, marginBottom: 50, width: 250, textAlign: 'center', color: '#E85220' }} editable={false} defaultValue='No account? Register Here!' />
                         </TouchableOpacity>
                     </View>
                 </View>
-            </NavigationContainer>
         )
     }
 
@@ -80,10 +65,43 @@ class Login extends Component {
         console.log('This is the Typed Password: ' + this.state.typedPassword);
         if (this.state.Username == this.state.typedUsername && this.state.Password == this.state.typedPassword) {
             console.log("Oh hey you can login");
+            this.props.navigation.navigate('Places');
         } else {
             console.log('Try again please');
         }
     }
 }
 
-export default createAppContainer(Stack);
+class Register extends React.Component{
+    static navigationOptions = {
+        headerShown: false
+    }
+    render(){
+        return(
+            <RegisterPage/>
+        )
+    }
+}
+
+class Places extends React.Component{
+    static navigationOptions = {
+        headerShown: false
+    }
+    render(){
+        return(
+            <PlacesPage/>
+        )
+    }
+}
+
+const AppNavigator = createStackNavigator({
+    Login: Login,
+    Register: Register,
+    Places: Places
+},
+    {
+        initialRouteName: 'Login'
+    }
+);
+
+export default createAppContainer(AppNavigator);

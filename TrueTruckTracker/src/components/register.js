@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Button, Text, TextInput, AsyncStorage, Linking } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import { NavigationContainer, DefaultTheme, } from '@react-navigation/native';
+import LoginPage from './login';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default class Login extends Component{
+
+class Register extends Component{
+    static navigationOptions ={
+        headerShown: false
+    }
     constructor(props){
         super(props);
         this.state={
@@ -40,5 +47,28 @@ export default class Login extends Component{
         AsyncStorage.setItem("Email", mail);
         AsyncStorage.setItem("Username", user);
         AsyncStorage.setItem("Password", pass);
+        this.props.navigation.navigate('Login')
     }
 }
+
+class Login extends Component{
+    static navigationOptions = {
+        headerShown: false
+    }
+    render(){
+        return(
+            <LoginPage/>
+        )
+    }
+}
+
+const AppNavigator = createStackNavigator({
+    Login: Login,
+    Register: Register
+},
+    {
+        initialRouteName: 'Register'
+    }
+);
+
+export default createAppContainer(AppNavigator);
