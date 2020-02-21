@@ -86,15 +86,16 @@ export default class Settings extends Component {
                     >
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ marginTop: 10, fontSize: 22, fontWeight: 'bold' }}>Change Password</Text>
-                            <Text style={[errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter current Password</Text>
-                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='Current Password' secureTextEntry={true} onChangeText={typedCurrentPassword => this.setState({ typedCurrentPassword })} />
-                            <Text style={[errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter new Password</Text>
-                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='New Password' secureTextEntry={true} onChangeText={typedNewPassword => this.setState({ typedNewPassword })} />
+                            <Text style={[this.state.errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter current Password</Text>
+                            <TextInput style={[this.state.errorRendering ? error.errorTextBox : { marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }]} autoCorrect={false} placeholder='Current Password' secureTextEntry={true} onChangeText={typedCurrentPassword => this.setState({ typedCurrentPassword })} />
+                            <Text style={[this.state.errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter new Password</Text>
+                            <TextInput style={[this.state.errorRendering ? error.errorTextBox : { marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }]} autoCorrect={false} placeholder='New Password' secureTextEntry={true} onChangeText={typedNewPassword => this.setState({ typedNewPassword })} />
                             <Button
                                 title='Change Password'
                                 color='#FF4531'
                                 onPress={this.changePassword}
                             />
+                            <Text style={[this.state.errorRendering ? error.errorText : {opacity: 0}]}>Either your current Password does not match or your new Password is the same as your current Password</Text>
                         </View>
                     </Overlay>
                     <Overlay
@@ -104,15 +105,16 @@ export default class Settings extends Component {
                     >
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ marginTop: 10, fontSize: 22, fontWeight: 'bold' }}>Change Email</Text>
-                            <Text style={{ marginTop: 30, fontSize: 16 }}>Please enter current Email</Text>
-                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='Current Email' secureTextEntry={false} onChangeText={typedCurrentEmail => this.setState({ typedCurrentEmail })} />
-                            <Text style={{ fontSize: 16 }}>Please enter new Email</Text>
-                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='New Email' secureTextEntry={false} onChangeText={typedNewEmail => this.setState({ typedNewEmail })} />
+                            <Text style={[this.state.errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter current Email</Text>
+                            <TextInput style={[this.state.errorRendering ? error.errorTextBox : { marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }]} autoCorrect={false} placeholder='Current Email' secureTextEntry={false} onChangeText={typedCurrentEmail => this.setState({ typedCurrentEmail })} />
+                            <Text style={[this.state.errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter new Email</Text>
+                            <TextInput style={[this.state.errorRendering ? error.errorTextBox : { marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }]} autoCorrect={false} placeholder='New Email' secureTextEntry={false} onChangeText={typedNewEmail => this.setState({ typedNewEmail })} />
                             <Button
                                 title='Change Password'
                                 color='#FF4531'
                                 onPress={this.changeEmail}
                             />
+                            <Text style={[this.state.errorRendering ? error.errorText : {opacity: 0}]}>Either your current Email does not match or your new Email is the same as your current Email</Text>
                         </View>
                     </Overlay>
                 </View>
@@ -165,6 +167,13 @@ const error = StyleSheet.create({
         color: '#E82040',
         fontSize: 16,
         marginTop: 30
+    },
+    errorTextBox: {
+        marginTop: 20,
+        marginBottom: 50,
+        borderBottomWidth: 1,
+        width: 250,
+        borderColor: '#E82040'
     }
 })
 

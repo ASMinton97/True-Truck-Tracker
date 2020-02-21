@@ -26,7 +26,7 @@ const myDrawerNavigator = createDrawerNavigator({
   }
 }, 
 {
-  initialRouteName: 'Home',
+  initialRouteName: 'Settings',
   navigationOptions: navigationOptionsHeader,
   edgeWidth: 30,
   drawerType: 'front'
