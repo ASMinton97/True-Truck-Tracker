@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, Text, Image, AsyncStorage, Linking } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TextInput, Text, Image, AsyncStorage, Button } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import { NavigationContainer, DefaultTheme, } from '@react-navigation/native';
 import { Overlay } from 'react-native-elements';
@@ -10,9 +10,38 @@ export default class Settings extends Component {
         this.onDarkThemeChange = this.onDarkThemeChange.bind(this);
         this.state = {
             switchValue: false,
-            isVisible: false,
+            isVisible1: false,
+            isVisible2: false,
             password: '',
+            typedCurrentPassword: '',
+            typedNewPassword: '',
+            email: '',
+            typedCurrentEmail: '',
+            typedNewEmail: '',
+            errorRendering: false
         }
+    }
+
+    componentDidMount() {
+        AsyncStorage.getItem("Password").then(response => {
+            if (!response) {
+                response = null
+            } else {
+                console.log('We got a password here');
+            }
+            this.setState({ password: response })
+            console.log(response)
+        })
+
+        AsyncStorage.getItem("Email").then(response => {
+            if (!response) {
+                response = null
+            } else {
+                console.log('We got an email here');
+            }
+            this.setState({ email: response })
+            console.log(response)
+        })
     }
 
     render() {
@@ -41,21 +70,86 @@ export default class Settings extends Component {
                             title='Change Password'
                             titleStyle={[(this.state.switchValue) ? styles.settingsItemDark : styles.settingsItemLight]}
                             backgroundColor={this.state.switchValue ? '#414141' : '#FFFFFF'}
-                            onPress={() => {this.setState({ isVisible: true })}}
+                            onPress={() => { this.setState({ isVisible1: true }) }}
+                        />
+                        <SettingsList.Item
+                            title='Change Email'
+                            titleStyle={[(this.state.switchValue) ? styles.settingsItemDark : styles.settingsItemLight]}
+                            backgroundColor={this.state.switchValue ? '#414141' : '#FFFFFF'}
+                            onPress={() => { this.setState({ isVisible2: true }) }}
                         />
                     </SettingsList>
                     <Overlay
                         style={{ position: 'absolute' }}
-                        isVisible={this.state.isVisible}
-                        onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
+                        isVisible={this.state.isVisible1}
+                        onBackdropPress={() => this.setState({ isVisible1: false }, this.forceUpdate())}
                     >
-                        <View>
-                            <Text>Here is where I will change my password</Text>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ marginTop: 10, fontSize: 22, fontWeight: 'bold' }}>Change Password</Text>
+                            <Text style={[errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter current Password</Text>
+                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='Current Password' secureTextEntry={true} onChangeText={typedCurrentPassword => this.setState({ typedCurrentPassword })} />
+                            <Text style={[errorRendering ? error.errorText : { marginTop: 30, fontSize: 16 }]}>Please enter new Password</Text>
+                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='New Password' secureTextEntry={true} onChangeText={typedNewPassword => this.setState({ typedNewPassword })} />
+                            <Button
+                                title='Change Password'
+                                color='#FF4531'
+                                onPress={this.changePassword}
+                            />
+                        </View>
+                    </Overlay>
+                    <Overlay
+                        style={{ position: 'absolute' }}
+                        isVisible={this.state.isVisible2}
+                        onBackdropPress={() => this.setState({ isVisible2: false }, this.forceUpdate())}
+                    >
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ marginTop: 10, fontSize: 22, fontWeight: 'bold' }}>Change Email</Text>
+                            <Text style={{ marginTop: 30, fontSize: 16 }}>Please enter current Email</Text>
+                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='Current Email' secureTextEntry={false} onChangeText={typedCurrentEmail => this.setState({ typedCurrentEmail })} />
+                            <Text style={{ fontSize: 16 }}>Please enter new Email</Text>
+                            <TextInput style={{ marginTop: 20, marginBottom: 50, borderBottomWidth: 1, width: 250 }} autoCorrect={false} placeholder='New Email' secureTextEntry={false} onChangeText={typedNewEmail => this.setState({ typedNewEmail })} />
+                            <Button
+                                title='Change Password'
+                                color='#FF4531'
+                                onPress={this.changeEmail}
+                            />
                         </View>
                     </Overlay>
                 </View>
             </View>
         )
+    }
+
+    changePassword = () => {
+        console.log(this.state.typedCurrentPassword);
+        if (this.state.typedCurrentPassword != this.state.password) {
+            this.setState({ errorRendering: true });
+            this.forceUpdate();
+        } else if (this.state.typedCurrentPassword == this.state.password && this.state.typedCurrentPassword != this.state.typedNewPassword) {
+            let newPassword = this.state.typedNewPassword;
+            AsyncStorage.setItem("Password", newPassword);
+            this.setState({ isVisible1: false });
+            if (this.state.errorRendering) {
+                this.setState({ errorRendering: false });
+            }
+        }
+    }
+
+    changeEmail = () => {
+        console.log(this.state.typedCurrentEmail);
+        if (this.state.typedCurrentEmail != this.state.email) {
+            console.log("The Email you typed was wrong")
+            this.setState({ errorRendering: true });
+            this.forceUpdate();
+        } else if (this.state.typedCurrentEmail == this.state.email && this.state.typedCurrentEmail != this.state.typedNewEmail) {
+            console.log("This should work?")
+            let newEmail = this.state.typedNewEmail;
+            AsyncStorage.setItem("Email", newEmail);
+            this.setState({ isVisible2: false });
+            if (this.state.errorRendering) {
+                this.setState({ errorRendering: false });
+            }
+        }
     }
 
     onDarkThemeChange() {
@@ -65,6 +159,14 @@ export default class Settings extends Component {
 
 
 }
+
+const error = StyleSheet.create({
+    errorText: {
+        color: '#E82040',
+        fontSize: 16,
+        marginTop: 30
+    }
+})
 
 const styles = StyleSheet.create({
     settingsTitleBackgroundLight: {

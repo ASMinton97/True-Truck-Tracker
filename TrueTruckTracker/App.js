@@ -13,7 +13,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const myDrawerNavigator = createDrawerNavigator({
   Home: {
-    screen: Places
+    screen: Login
   },
   Account: {
     screen: Account
@@ -23,9 +23,6 @@ const myDrawerNavigator = createDrawerNavigator({
   },
   TruckList: {
     screen: TruckList
-  },
-  Login: {
-    screen: Login
   }
 }, 
 {

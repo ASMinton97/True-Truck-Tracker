@@ -18,6 +18,7 @@ class Place extends Component {
             userLatitude: 1,
             userLongitude: 1,
             markers: [],
+            index: 0,
             isLoading: true,
             isVisible: false
         }
@@ -68,7 +69,7 @@ class Place extends Component {
                 for (let i = 0; i < json.businesses.length; i++) {
                     //This is pushing all the data that I need to access later, such as name of the truck, phone number, price, and rating.
                     markersArray.push({
-                        key: i + 10000,
+                        key: i,
                         name: json.businesses[i].name,
                         truckLatitude: json.businesses[i].coordinates.latitude,
                         truckLongitude: json.businesses[i].coordinates.longitude,
@@ -102,14 +103,14 @@ class Place extends Component {
                     <View style={{ position: 'absolute' }}>
                         <Marker
                             //The key is useful for if I need to access a particuar food truck later.
-                            key={marker.index}
+                            key={marker.key}
                             //Here I am setting the coordinates of each food truck and placing them on the map
                             coordinate={{ latitude: marker.truckLatitude, longitude: marker.truckLongitude }}
                             pinColor='red'
 
                             onPress={() => {
                                 console.log("Hey this is supposed to move to the truck information page");
-                                this.setState({ isVisible: true });
+                                this.setState({ index: marker.key, isVisible: true });
                             }}
 
                         />
@@ -154,18 +155,18 @@ class Place extends Component {
                             onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
                         >
                             <View>
-                                <Image source={{ uri: this.state.markers[1].image_url }} style={{ resizeMode: 'contain', height: 300, width: 312,}} />
-                                <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[1].name}</Text>
-                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[1].rating}</Text>
-                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[1].reviewCount}</Text>
+                                <Image source={{ uri: this.state.markers[this.state.index].image_url }} style={{ resizeMode: 'contain', height: 300, width: 312,}} />
+                                <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
+                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}</Text>
+                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
                                         Linking.openURL('tel:' + phone)
                                     }}
                                 >
-                                    <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[1].phone}</Text>
+                                    <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[this.state.index].phone}</Text>
                                 </TouchableOpacity>
-                                <Text style={{ fontSize: 20, marginTop: 25 }}>Price: {this.state.markers[1].price}</Text>
+                                <Text style={{ fontSize: 20, marginTop: 25 }}>Price: {this.state.markers[this.state.index].price}</Text>
                             </View>
                         </Overlay>
                 </View>

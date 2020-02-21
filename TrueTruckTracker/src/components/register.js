@@ -46,7 +46,7 @@ class Register extends Component{
         AsyncStorage.setItem("Email", mail);
         AsyncStorage.setItem("Username", user);
         AsyncStorage.setItem("Password", pass);
-        this.props.navigation.navigate('Login')
+        this.props.navigation.navigate.goBack()
     }
 }
 
