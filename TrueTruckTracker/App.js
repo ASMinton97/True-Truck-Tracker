@@ -24,9 +24,9 @@ const myDrawerNavigator = createDrawerNavigator({
   TruckList: {
     screen: TruckList
   }
-}, 
+},
 {
-  initialRouteName: 'Settings',
+  initialRouteName: 'TruckList',
   navigationOptions: navigationOptionsHeader,
   edgeWidth: 30,
   drawerType: 'front'

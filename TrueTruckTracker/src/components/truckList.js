@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, AsyncStorage, Linking } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, AsyncStorage, Linking, StatusBar } from 'react-native';
 
-const TruckInformation = ({ name, rating, price, image, phone, reviewCount }) => {
+const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url }) => {
     return (
-        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#000', marginTop: 10 }}>
-            <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 75, width: 75, marginLeft: 10 }} />
-            <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto' }}>{name}</Text>
-            <View style={{flexDirection:'column', marginLeft: 15}}>
-                <Text style={{ fontSize: 13, }}>Rating: {rating} / 5</Text>
-                <Text style={{ fontSize: 13, }}>Review Count: {reviewCount}</Text>
-            </View>
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', borderBottomWidth: 1, borderColor:'#525252', marginTop: 20, paddingBottom: 20 }}>
             <TouchableOpacity
-                onPress={() => {
-                    Linking.openURL('tel:' + phone)
-                }}
+                onPress={() => Linking.openURL(url)}
             >
-                <Text style={{ fontSize: 20, marginTop: 25, marginLeft: 15 , marginBottom: 25}}>Phone: {phone}</Text>
+                <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 100, width: 100, marginLeft: 10 }} />
             </TouchableOpacity>
-            <Text style={{ fontSize: 20, marginTop: 25, marginLeft: 15 }}>Price: {price}</Text>
+            <View style={{ flexDirection: 'column' }}>
+                <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
+                <View style={{ flexDirection: 'column', marginLeft: 15 }}>
+                    <Text style={{ fontSize: 13, }}>Rating: {rating} / 5</Text>
+                    <Text style={{ fontSize: 13, }}>Review Count: {reviewCount}</Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        Linking.openURL('tel:' + phone)
+                    }}
+                >
+                    <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 15, marginBottom: 5 }}>Phone: {phone}</Text>
+                </TouchableOpacity>
+                <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 15 }}>Price: {price}</Text>
+            </View>
         </View>
     )
 }
@@ -56,11 +62,17 @@ export default class Settings extends Component {
                     rating={this.state.markers[i].rating}
                     reviewCount={this.state.markers[i].reviewCount}
                     price={this.state.markers[i].price}
+                    url={this.state.markers[i].url}
                 />
             )
         }
         return (
-            <ScrollView>
+            
+            <ScrollView stickyHeaderIndices={[1]}>
+                <StatusBar hidden={true}/>
+                <View style={{ flex: 1, alignItems:'center', justifyContent: 'center', borderBottomWidth: 1, borderColor: '#c8c7cc', backgroundColor: '#f7f7f8', paddingBottom: 15, paddingTop: 15 }}>
+                    <Text style={{fontSize: 26}}>Truck List</Text>
+                </View>
                 {truckInfo}
             </ScrollView>
         )

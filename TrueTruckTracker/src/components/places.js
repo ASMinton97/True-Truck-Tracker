@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions, Alert, Text, AsyncStorage, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert, Text, AsyncStorage, Image, TouchableOpacity, Linking } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -78,7 +78,8 @@ class Place extends Component {
                         id: json.businesses[i].id,
                         image_url: json.businesses[i].image_url,
                         phone: json.businesses[i].phone,
-                        reviewCount: json.businesses[i].review_count
+                        reviewCount: json.businesses[i].review_count,
+                        url: json.businesses[i].url
                     });
                 }
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
@@ -155,13 +156,19 @@ class Place extends Component {
                             onBackdropPress={() => this.setState({ isVisible: false }, this.forceUpdate())}
                         >
                             <View>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Linking.openURL(this.state.markers[this.state.index].url);
+                                    }}
+                                >
                                 <Image source={{ uri: this.state.markers[this.state.index].image_url }} style={{ resizeMode: 'contain', height: 300, width: 312,}} />
+                                </TouchableOpacity>
                                 <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}</Text>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        Linking.openURL('tel:' + phone)
+                                        Linking.openURL('tel:' + phone);
                                     }}
                                 >
                                     <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[this.state.index].phone}</Text>
