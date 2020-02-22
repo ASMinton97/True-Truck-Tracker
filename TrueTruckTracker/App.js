@@ -26,7 +26,7 @@ const myDrawerNavigator = createDrawerNavigator({
   }
 },
 {
-  initialRouteName: 'TruckList',
+  initialRouteName: 'Home',
   navigationOptions: navigationOptionsHeader,
   edgeWidth: 30,
   drawerType: 'front'
