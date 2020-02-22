@@ -13,7 +13,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const myDrawerNavigator = createDrawerNavigator({
   Home: {
-    screen: Login
+    screen: Places
   },
   Account: {
     screen: Account
@@ -26,7 +26,7 @@ const myDrawerNavigator = createDrawerNavigator({
   }
 },
 {
-  initialRouteName: 'TruckList',
+  initialRouteName: 'Home',
   navigationOptions: navigationOptionsHeader,
   edgeWidth: 30,
   drawerType: 'front'

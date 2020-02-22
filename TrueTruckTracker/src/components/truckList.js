@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, AsyncStorage, Linking, StatusBar } from 'react-native';
 
-const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url }) => {
+const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url, favorite }) => {
     return (
-        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', borderBottomWidth: 1, borderColor:'#525252', marginTop: 20, paddingBottom: 20 }}>
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', borderBottomWidth: 1, borderColor: '#525252', marginTop: 20, paddingBottom: 20 }}>
             <TouchableOpacity
                 onPress={() => Linking.openURL(url)}
             >
@@ -11,6 +11,11 @@ const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url 
             </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginLeft: 5 }}>
                 <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
+                <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+                    <TouchableOpacity onPress={favorite = !favorite}>
+                        <Image source={[(favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
+                    </TouchableOpacity>
+                </View>
                 <View style={{ flexDirection: 'column', marginLeft: 15 }}>
                     <Text style={{ fontSize: 13, }}>Rating: {rating} / 5</Text>
                     <Text style={{ fontSize: 13, }}>Review Count: {reviewCount}</Text>
@@ -63,15 +68,16 @@ export default class Settings extends Component {
                     reviewCount={this.state.markers[i].reviewCount}
                     price={this.state.markers[i].price}
                     url={this.state.markers[i].url}
+                    favorite={this.state.markers[i].favorite}
                 />
             )
         }
         return (
-            
+
             <ScrollView stickyHeaderIndices={[1]}>
-                <StatusBar hidden={true}/>
-                <View style={{ flex: 1, alignItems:'center', justifyContent: 'center', borderBottomWidth: 1, borderColor: '#c8c7cc', backgroundColor: '#f7f7f8', paddingBottom: 15, paddingTop: 15 }}>
-                    <Text style={{fontSize: 26}}>Truck List</Text>
+                <StatusBar hidden={true} />
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderColor: '#c8c7cc', backgroundColor: '#f7f7f8', paddingBottom: 15, paddingTop: 15 }}>
+                    <Text style={{ fontSize: 26 }}>Truck List</Text>
                 </View>
                 {truckInfo}
             </ScrollView>

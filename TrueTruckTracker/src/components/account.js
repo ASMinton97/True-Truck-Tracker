@@ -11,13 +11,14 @@ export default class Account extends Component{
     }
 
     componentDidMount(){
-        AsyncStorage.getItem("Username").then(value => {
+        AsyncStorage.multiGet(["Username", "Favorites"]).then(value => {
             if(!value){
                 value = ":("
             } else {
                 console.log('We gotem boys');
             }
-            this.setState({username: value});
+            this.setState({username: value[0][1]});
+            this.setState({favoriteTrucks: value[1][1]});
             console.log(value);
         });
     }

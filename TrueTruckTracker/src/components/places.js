@@ -79,7 +79,8 @@ class Place extends Component {
                         image_url: json.businesses[i].image_url,
                         phone: json.businesses[i].phone,
                         reviewCount: json.businesses[i].review_count,
-                        url: json.businesses[i].url
+                        url: json.businesses[i].url,
+                        favorite: false
                     });
                 }
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
@@ -166,6 +167,11 @@ class Place extends Component {
                             </View>
                             <View style={{ flex: .4, borderBottomWidth: 1, borderColor: '#FF4531' }}>
                                 <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
+                                <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+                                    <TouchableOpacity onPress={() => AsyncStorage.setItem("Favorites", JSON.stringify(this.state.markers[this.state.index]))}>
+                                        <Image  style = {{width: 50, height: 50}} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
+                                    </TouchableOpacity>
+                                </View>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}/5</Text>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
                             </View>
