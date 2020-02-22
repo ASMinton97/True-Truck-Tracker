@@ -110,7 +110,6 @@ class Place extends Component {
                             pinColor='red'
 
                             onPress={() => {
-                                console.log("Hey this is supposed to move to the truck information page");
                                 this.setState({ index: marker.key, isVisible: true });
                             }}
 
@@ -156,19 +155,19 @@ class Place extends Component {
                         onBackdropPress={() => this.setState({ isVisible: false })}
                     >
                         <View style={{ flex: 1 }}>
-                            <View style={{ flex: .8, borderBottomWidth: 1, borderColor: '#FF4531', alignItems: 'stretch', justifyContent: 'flex-start' }}>
+                            <View style={{ flex: .8, borderBottomWidth: 1, borderColor: '#FF4531', alignItems: 'stretch', justifyContent: 'flex-start', marginBottom: 5 }}>
                                 <TouchableOpacity
                                     onPress={() => {
                                         Linking.openURL(this.state.markers[this.state.index].url);
                                     }}
                                 >
-                                    <Image source={{ uri: this.state.markers[this.state.index].image_url }} style={{ resizeMode: 'contain', height: 300, width: 312, }} />
+                                    <Image source={{ uri: this.state.markers[this.state.index].image_url }} style={{ resizeMode: 'contain', height: 280, width: 312 }} />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{borderBottomWidth:1, borderColor:'#FF4531'}}>
+                            <View style={{ flex: .4, borderBottomWidth: 1, borderColor: '#FF4531' }}>
                                 <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}/5</Text>
-                                <Text style={{ fontSize: 13, flexDirection: 'row', marginBottom: 7 }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
+                                <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
                             </View>
                             <TouchableOpacity
                                 onPress={() => {
@@ -177,7 +176,7 @@ class Place extends Component {
                             >
                                 <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[this.state.index].phone}</Text>
                             </TouchableOpacity>
-                            <Text style={{ fontSize: 20, marginTop: 25 }}>Price: {this.state.markers[this.state.index].price}</Text>
+                            <Text style={{ fontSize: 20, marginTop: 25, marginBottom: 15 }}>Price: {this.state.markers[this.state.index].price}</Text>
                         </View>
                     </Overlay>
                 </View>

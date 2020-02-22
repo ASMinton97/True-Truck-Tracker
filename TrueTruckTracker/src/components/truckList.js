@@ -9,7 +9,7 @@ const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url 
             >
                 <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 100, width: 100, marginLeft: 10 }} />
             </TouchableOpacity>
-            <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'column', marginLeft: 5 }}>
                 <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
                 <View style={{ flexDirection: 'column', marginLeft: 15 }}>
                     <Text style={{ fontSize: 13, }}>Rating: {rating} / 5</Text>
