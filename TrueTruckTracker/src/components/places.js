@@ -26,16 +26,16 @@ class Place extends Component {
 
     componentDidMount() {
         this.findCoordinates();
-        // AsyncStorage.getItem("data").then(value => {
-        //     if (!value) {
-        //         value = [];
-        //     } else {
-        //         value = JSON.parse(value);
-        //     }
-        //     this.setState({ markers: value });
-        //     console.log(value);
-        //     AsyncStorage.removeItem("data");
-        // })
+        AsyncStorage.getItem("data").then(value => {
+            if (!value) {
+                value = [];
+            } else {
+                value = JSON.parse(value);
+            }
+            this.setState({ markers: value });
+            console.log(value);
+            AsyncStorage.removeItem("data")
+        })
     }
 
     //This function is meant for finding the user's coordinates
@@ -85,7 +85,7 @@ class Place extends Component {
                 }
                 //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
                 AsyncStorage.setItem("data", JSON.stringify(markersArray));
-                //Setting the isLoading state to false here will then actually render the map and make it visible for the user
+                //Setting the isLoading state to false here will render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
             //This is a fallback just in case something goes wrong with the API call
@@ -168,8 +168,8 @@ class Place extends Component {
                             <View style={{ flex: .4, borderBottomWidth: 1, borderColor: '#FF4531' }}>
                                 <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
                                 <View style={{ flexDirection: 'row', marginLeft: 5 }}>
-                                    <TouchableOpacity onPress={() => AsyncStorage.setItem("Favorites", JSON.stringify(this.state.markers[this.state.index]))}>
-                                        <Image  style = {{width: 50, height: 50}} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
+                                    <TouchableOpacity onPress={this.addToFavorites}>
+                                        <Image style={{ width: 50, height: 50 }} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
                                     </TouchableOpacity>
                                 </View>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}/5</Text>
@@ -188,6 +188,16 @@ class Place extends Component {
                 </View>
             )
         }
+    }
+
+    addToFavorites = () => {
+        let favoritesArray = JSON.parse(JSON.stringify(this.state.markers));
+        console.log(favoritesArray);
+        console.log(favoritesArray[this.state.index]);
+        favoritesArray[this.state.index].favorite = !favoritesArray[this.state.index].favorite;
+        this.setState({markers: [...favoritesArray]});
+        AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray));
+        console.log(this.state.markers[this.state.index].favorite);
     }
 }
 

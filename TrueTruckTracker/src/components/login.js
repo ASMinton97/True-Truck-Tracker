@@ -60,13 +60,13 @@ class Login extends React.Component {
 
     checkLogin = () => {
         console.log('This is the Username: ' + this.state.Username);
-        console.log('This is the Typed Username: ' + this.state.typedUsername);
         console.log('This is the Password: ' + this.state.Password);
-        console.log('This is the Typed Password: ' + this.state.typedPassword);
         if (this.state.Username == this.state.typedUsername && this.state.Password == this.state.typedPassword) {
             console.log("Oh hey you can login");
             this.props.navigation.navigate('Places');
         } else {
+            console.log('This is the Username: ' + this.state.Username);
+            console.log('This is the Password: ' + this.state.Password);
             console.log('Try again please');
         }
     }
