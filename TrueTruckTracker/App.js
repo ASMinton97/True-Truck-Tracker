@@ -21,7 +21,7 @@ const myDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  TruckList: {
+  Trucks: {
     screen: TruckList
   }
 },

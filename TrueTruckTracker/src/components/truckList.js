@@ -10,7 +10,11 @@ const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url,
                 <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 100, width: 100, marginLeft: 10 }} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginLeft: 5 }}>
-                <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
+                <TouchableOpacity
+                    onPress={() => Linking.openURL(url)}
+                >
+                    <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
+                </TouchableOpacity>
                 <View style={{ flexDirection: 'row', marginLeft: 5 }}>
                     <TouchableOpacity onPress={favorite = !favorite}>
                         <Image source={[(favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
@@ -57,7 +61,7 @@ export default class Settings extends Component {
 
     render() {
         let truckInfo = [];
-        //I am pushing the info that I grabbed from Async Storage and pushing it into this array to render
+        //I am Taking the info that I grabbed from Async Storage and pushing it into this array to render
         for (let i = 0; i < this.state.markers.length; i++) {
             truckInfo.push(
                 <TruckInformation

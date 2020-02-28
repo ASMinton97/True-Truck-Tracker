@@ -1,41 +1,39 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
-  Text,
-  ScrollView,
-  AsyncStorage,
-  Image
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, StatusBar, Text, ScrollView, AsyncStorage, Image, ImageBackground, Dimensions, Linking } from "react-native";
+import { Avatar, Icon } from 'react-native-elements';
 
 const FavoriteTruck = ({ name, rating, price, image, phone, reviewCount, url, favorite }) => {
+  //if (favorite) {
   return (
-    <View
-      style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", borderBottomWidth: 1, borderColor: "#525252", marginTop: 20, paddingBottom: 20 }}>
-      <TouchableOpacity onPress={() => Linking.openURL(url)}>
+    <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", borderBottomWidth: 1, borderColor: "#525252", marginTop: 20, paddingBottom: 20 }}>
+      <TouchableOpacity
+        onPress={() => Linking.openURL(url)}
+      >
         <Image source={{ uri: image }} style={{ resizeMode: "contain", height: 100, width: 100, marginLeft: 10 }} />
       </TouchableOpacity>
-      <View style={{ flexDirection: "column", marginLeft: 5 }}>
-        <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: "Roboto", fontWeight: "bold" }}>
-          {name}
-        </Text>
-        <View style={{ flexDirection: "column", marginLeft: 15 }}>
+      <View style={{ flexDirection: "column", marginLeft: 15 }}>
+        <TouchableOpacity
+          onPress={() => Linking.openURL(url)}
+        >
+          <Text style={{ fontSize: 20, fontFamily: "Roboto", fontWeight: "bold" }}> {name} </Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: "column", marginLeft: 7 }}>
           <Text style={{ fontSize: 13 }}>Rating: {rating} / 5</Text>
           <Text style={{ fontSize: 13 }}>Review Count: {reviewCount}</Text>
         </View>
         <TouchableOpacity
           onPress={() => {
             Linking.openURL("tel:" + phone);
-          }}>
-          <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 15, marginBottom: 5 }}> Phone: {phone} </Text>
+          }}
+        >
+          <Text style={{ fontSize: 20, marginTop: 5, marginBottom: 5 }}> Phone: {phone} </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 15 }}> Price: {price} </Text>
+        <Text style={{ fontSize: 20, marginTop: 5 }}> Price: {price} </Text>
       </View>
     </View>
-  );
-};
+  )
+  //}
+}
 
 export default class Account extends Component {
   constructor(props) {
@@ -66,8 +64,7 @@ export default class Account extends Component {
       }
       this.setState({ favoriteTrucks: valParsed });
       console.log(valParsed);
-      console.log(valParsed[0].name);
-      //AsyncStorage.removeItem("Favorites");
+      AsyncStorage.removeItem("Favorites");
     });
   }
 
@@ -89,12 +86,26 @@ export default class Account extends Component {
       );
     }
 
-    //if(this.state.favoriteTrucks.favorite){
     return (
-      <ScrollView >
-        {FavoriteTruck}
-      </ScrollView>
+      <View >
+        <StatusBar hidden={true} />
+        <View>
+          <ImageBackground source={{ uri: 'https://i.pinimg.com/originals/cc/d2/da/ccd2da4b83fba486cc61ed248db8bf57.jpg' }} style={{ width: Dimensions.get("window").width, height: 120 }} />
+        </View>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginBottom: 150, marginLeft: 20, top: 30, position: 'absolute' }}>
+          <Avatar
+            rounded
+            icon={{ name: "person-outline" }}
+            size='large'
+          />
+        </View>
+        <ScrollView stickyHeaderIndices={[0]}>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderColor: '#c8c7cc', backgroundColor: '#f7f7f8', paddingBottom: 15, paddingTop: 15 }}>
+            <Text style={{ fontSize: 22 }}>Favorite Trucks!</Text>
+          </View>
+          {favorites}
+        </ScrollView>
+      </View>
     );
-    //};
   }
 }

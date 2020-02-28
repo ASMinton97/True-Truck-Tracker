@@ -142,7 +142,7 @@ class Place extends Component {
                         {/*The marker here is the users location that I found in the findCoordinates() function*/}
                         <Marker
                             coordinate={{ latitude: this.state.userLatitude, longitude: this.state.userLongitude }}
-                            title='Here I am!'
+                            title='Here you are!'
                             description="Lets find a food truck for you to eat at!"
                             pinColor='yellow'
                         />
@@ -166,7 +166,13 @@ class Place extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: .4, borderBottomWidth: 1, borderColor: '#FF4531' }}>
-                                <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Linking.openURL(this.state.markers[this.state.index].url);
+                                    }}
+                                >
+                                    <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
+                                </TouchableOpacity>
                                 <View style={{ flexDirection: 'row', marginLeft: 5 }}>
                                     <TouchableOpacity onPress={this.addToFavorites}>
                                         <Image style={{ width: 50, height: 50 }} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
@@ -177,7 +183,7 @@ class Place extends Component {
                             </View>
                             <TouchableOpacity
                                 onPress={() => {
-                                    Linking.openURL('tel:' + phone);
+                                    Linking.openURL('tel:' + this.state.markers[this.state.index].phone);
                                 }}
                             >
                                 <Text style={{ fontSize: 20, marginTop: 25 }}>Phone: {this.state.markers[this.state.index].phone}</Text>
@@ -192,12 +198,27 @@ class Place extends Component {
 
     addToFavorites = () => {
         let favoritesArray = JSON.parse(JSON.stringify(this.state.markers));
-        console.log(favoritesArray);
-        console.log(favoritesArray[this.state.index]);
-        favoritesArray[this.state.index].favorite = !favoritesArray[this.state.index].favorite;
-        this.setState({markers: [...favoritesArray]});
-        AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray));
-        console.log(this.state.markers[this.state.index].favorite);
+        //console.log(favoritesArray[this.state.index]);
+        let makeFavorite = JSON.parse(JSON.stringify(favoritesArray[this.state.index]));
+        makeFavorite.favorite = !makeFavorite.favorite;
+        console.log(makeFavorite)
+        favoritesArray.splice(this.state.index, 1, makeFavorite);
+        //console.log(favoritesArray);
+        this.setState({ markers: [...favoritesArray] });
+
+        if (favoritesArray[this.state.index].favorite == true) {
+            //console.log(favoritesArray);
+            AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray));
+        }
+
+        // AsyncStorage.getItem("Favorites").then(response =>{
+        //     if(!response){
+        //         AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray[this.state.index]));
+        //     } else {
+        //         let favoriteTrucks = JSON.parse(response) + [...favoritesArray[this.state.index]];
+        //         AsyncStorage.setItem("Favorites", JSON.stringify(favoriteTrucks));
+        //     }
+        // })
     }
 }
 
