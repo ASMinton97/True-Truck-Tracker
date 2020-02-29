@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, StatusBar, Text, ScrollView, AsyncS
 import { Avatar, Icon } from 'react-native-elements';
 
 const FavoriteTruck = ({ name, rating, price, image, phone, reviewCount, url, favorite }) => {
-  //if (favorite) {
+ // if (favorite == true) {
   return (
     <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", borderBottomWidth: 1, borderColor: "#525252", marginTop: 20, paddingBottom: 20 }}>
       <TouchableOpacity
@@ -32,7 +32,7 @@ const FavoriteTruck = ({ name, rating, price, image, phone, reviewCount, url, fa
       </View>
     </View>
   )
-  //}
+ // }
 }
 
 export default class Account extends Component {

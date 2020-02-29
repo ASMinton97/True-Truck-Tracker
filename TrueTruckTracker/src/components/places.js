@@ -65,26 +65,30 @@ class Place extends Component {
             .then(json => {
                 //Created a temporary array and set it equal to my state array.
                 //You cannot push to a state array. You can only use setState
-                let markersArray = this.state.markers;
-                for (let i = 0; i < json.businesses.length; i++) {
-                    //This is pushing all the data that I need to access later, such as name of the truck, phone number, price, and rating.
-                    markersArray.push({
-                        key: i,
-                        name: json.businesses[i].name,
-                        truckLatitude: json.businesses[i].coordinates.latitude,
-                        truckLongitude: json.businesses[i].coordinates.longitude,
-                        rating: json.businesses[i].rating,
-                        price: json.businesses[i].price,
-                        id: json.businesses[i].id,
-                        image_url: json.businesses[i].image_url,
-                        phone: json.businesses[i].phone,
-                        reviewCount: json.businesses[i].review_count,
-                        url: json.businesses[i].url,
-                        favorite: false
-                    });
-                }
-                //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
-                AsyncStorage.setItem("data", JSON.stringify(markersArray));
+                AsyncStorage.getItem("data").then(value => {
+                    if (!value) {
+                        let markersArray = this.state.markers;
+                        for (let i = 0; i < json.businesses.length; i++) {
+                            //This is pushing all the data that I need to access later, such as name of the truck, phone number, price, and rating.
+                            markersArray.push({
+                                key: i,
+                                name: json.businesses[i].name,
+                                truckLatitude: json.businesses[i].coordinates.latitude,
+                                truckLongitude: json.businesses[i].coordinates.longitude,
+                                rating: json.businesses[i].rating,
+                                price: json.businesses[i].price,
+                                id: json.businesses[i].id,
+                                image_url: json.businesses[i].image_url,
+                                phone: json.businesses[i].phone,
+                                reviewCount: json.businesses[i].review_count,
+                                url: json.businesses[i].url,
+                                favorite: false
+                            });
+                        }
+                        //Here I am grabbing the JSON data from the Yelp API and storing using Async Storage... Hopefully
+                        AsyncStorage.setItem("data", JSON.stringify(markersArray));
+                    }
+                });
                 //Setting the isLoading state to false here will render the map and make it visible for the user
                 this.setState({ isLoading: false });
             }),
@@ -201,24 +205,15 @@ class Place extends Component {
         //console.log(favoritesArray[this.state.index]);
         let makeFavorite = JSON.parse(JSON.stringify(favoritesArray[this.state.index]));
         makeFavorite.favorite = !makeFavorite.favorite;
-        console.log(makeFavorite)
+        //console.log(makeFavorite)
         favoritesArray.splice(this.state.index, 1, makeFavorite);
         //console.log(favoritesArray);
         this.setState({ markers: [...favoritesArray] });
 
         if (favoritesArray[this.state.index].favorite == true) {
-            //console.log(favoritesArray);
+            console.log(favoritesArray);
             AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray));
         }
-
-        // AsyncStorage.getItem("Favorites").then(response =>{
-        //     if(!response){
-        //         AsyncStorage.setItem("Favorites", JSON.stringify(favoritesArray[this.state.index]));
-        //     } else {
-        //         let favoriteTrucks = JSON.parse(response) + [...favoritesArray[this.state.index]];
-        //         AsyncStorage.setItem("Favorites", JSON.stringify(favoriteTrucks));
-        //     }
-        // })
     }
 }
 
