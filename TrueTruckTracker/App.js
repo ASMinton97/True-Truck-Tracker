@@ -13,7 +13,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const myDrawerNavigator = createDrawerNavigator({
   Home: {
-    screen: Places
+    screen: Login
   },
   Account: {
     screen: Account
@@ -52,6 +52,7 @@ const AppContainer = createAppContainer(myDrawerNavigator);
 
 class App extends React.Component {
   render() {
+    console.disableYellowBox = true;
     return <AppContainer />;
   }
 }

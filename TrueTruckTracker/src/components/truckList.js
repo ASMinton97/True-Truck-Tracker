@@ -10,14 +10,11 @@ const TruckInformation = ({ name, rating, price, image, phone, reviewCount, url,
                 <Image source={{ uri: image }} style={{ resizeMode: 'contain', height: 100, width: 100, marginLeft: 10 }} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginLeft: 5 }}>
-                <TouchableOpacity
-                    onPress={() => Linking.openURL(url)}
-                >
-                    <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
-                </TouchableOpacity>
                 <View style={{ flexDirection: 'row', marginLeft: 5 }}>
-                    <TouchableOpacity onPress={favorite = !favorite}>
-                        <Image source={[(favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
+                    <TouchableOpacity
+                        onPress={() => Linking.openURL(url)}
+                    >
+                        <Text style={{ fontSize: 20, marginLeft: 15, fontFamily: 'Roboto', fontWeight: 'bold' }}>{name}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'column', marginLeft: 15 }}>

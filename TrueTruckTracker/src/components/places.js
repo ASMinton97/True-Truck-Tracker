@@ -34,7 +34,6 @@ class Place extends Component {
             }
             this.setState({ markers: value });
             console.log(value);
-            AsyncStorage.removeItem("data")
         })
     }
 
@@ -170,6 +169,10 @@ class Place extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: .4, borderBottomWidth: 1, borderColor: '#FF4531' }}>
+                                <View style={{ flexDirection: 'row', marginright: 1}}>
+                                <TouchableOpacity onPress={this.addToFavorites}>
+                                    <Image style={{ width: 50, height: 50 }} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
+                                </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
                                         Linking.openURL(this.state.markers[this.state.index].url);
@@ -177,10 +180,6 @@ class Place extends Component {
                                 >
                                     <Text style={{ fontSize: 35, fontFamily: 'Roboto' }}>{this.state.markers[this.state.index].name}</Text>
                                 </TouchableOpacity>
-                                <View style={{ flexDirection: 'row', marginLeft: 5 }}>
-                                    <TouchableOpacity onPress={this.addToFavorites}>
-                                        <Image style={{ width: 50, height: 50 }} source={[(this.state.markers[this.state.index].favorite) ? { uri: 'https://i.imgur.com/kvxNrQr.png' } : { uri: 'https://i.imgur.com/CKMshFj.png' }]} />
-                                    </TouchableOpacity>
                                 </View>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Rating: {this.state.markers[this.state.index].rating}/5</Text>
                                 <Text style={{ fontSize: 13, flexDirection: 'row' }}>Review Count: {this.state.markers[this.state.index].reviewCount}</Text>
